@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="cliente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cliente.h" />
 		<Unit filename="interface.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -38,6 +42,10 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="vendedor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vendedor.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
