@@ -114,3 +114,96 @@ int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, i
     } while(tecla != TEC_ESC);
     textBackground(BLACK);
 }
+
+int EntradaInserindo = 1;
+
+void tipocursor(int cursor){
+    HANDLE myconsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO CURSOR;
+    BOOL result;
+    CURSOR.dwSize = 1;
+    if(cursor == 0)
+    CURSOR.bVisible = FALSE;
+    else
+    CURSOR.bVisible = TRUE;
+    result=SetConsoleCursorInfo(myconsole, &CURSOR);//second argument need pointer
+}
+
+void textcoloreback (int letras, int fundo){/*para mudar a cor de fundo mude o background*/
+    SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE),
+    letras + (fundo << 4));
+}
+
+int EntradaDados(int x, int y, int Tamanho, char Texto[]) {
+    int Tecla, Pos;
+    char aux[10000];
+
+    gotoxy(x, y);
+    textcoloreback(BLUE, YELLOW);
+
+    printf("%*s", Tamanho, " ");
+    gotoxy(x, y);
+
+    printf("%s", Texto);
+    Pos = strlen(Texto);
+
+    gotoxy(67, 0);
+
+    do {
+        gotoxy(Pos + x, y);
+        Tecla = getTecla();
+
+        if(Tecla == TEC_ENTER) break;
+        if(Tecla == TEC_ESQ) Pos--;
+        if(Tecla == TEC_DIR) Pos++;
+        if(Tecla == TEC_CIMA) break;
+        if(Tecla == TEC_BAIXO) break;
+        if(Tecla == TEC_ESC) break;
+
+        if(Tecla == TEC_BACKSPACE && Pos > 0){
+            Pos--;
+            strcpy(&Texto[Pos], &Texto[Pos+1]);
+            printf("\x08%s ", &Texto[Pos]);
+        }
+
+        if(Tecla == TEC_DEL && Pos >= 0 && Texto[Pos] != 0){
+            //Pos--;
+            strcpy(&Texto[Pos], &Texto[Pos+1]);
+            printf("%s ", &Texto[Pos]);
+        }
+
+        if(Tecla >= ' ' && Tecla < 127) {
+            if(Pos < Tamanho){
+                if(EntradaInserindo){
+                    // Inserir
+                    if (strlen(Texto) < Tamanho){
+                        if(Texto[Pos] == 0) Texto[Pos+1] = 0;
+
+                        strcpy(aux, Texto);
+                        strcpy(&Texto[Pos+1], &aux[Pos]);
+                        Texto[Pos++] = Tecla;
+
+                        printf("%s", &Texto[Pos-1]);
+                    }
+                }
+
+                // Sobrescreve
+                else{
+                    if (Texto[Pos] == 0) Texto[Pos+1] = 0;
+
+                    Texto[Pos++] = Tecla;
+                    printf("%c", Tecla);
+                }
+            }
+        }
+
+        if(Pos < 0) Pos = 0;
+        if(Pos > Tamanho) Pos = Tamanho;
+        if(Pos > 0 && Texto[Pos-1] == 0) Pos--;
+    } while(1);
+
+    textcoloreback(YELLOW, BLUE);
+    gotoxy(67, 0);
+
+    return Tecla;
+}
