@@ -3,18 +3,22 @@
 
 int main() {
     char descricao[][60] = { "Seja bem vindo ao nosso sistema de compra de ingressos.", "Selecione uma opcao abaixo:"};
-    char opcoes[][20] = { "1- Cliente (Compra)", "2- Vendedor" };
+    char opcoes[][20] = { "Cliente (Compra)", "Vendedor", "Sair" };
 
-    criarMenuPrincipal(3, 2, 80, descricao, opcoes);
+    int opcao;
+
+    do {
+        opcao = criarMenuPrincipal(3, 2, 80, descricao, opcoes, 3);
+
+        printf("%d", opcao);
+    } while(opcao != 2);
 }
 
-void criarMenuPrincipal(int initX, int initY, int tamanho, char desc[][60], char opcoes[][20]) {
+int criarMenuPrincipal(int initX, int initY, int tamanho, char desc[][60], char opcoes[][20], int qntd) {
     Borda(initX, initY, tamanho, 25, 1, 0);
     char projetoName[50] = "TicketSales";
 
     int titlePositionX = calcularTamanhoString(projetoName, tamanho, initX);
-    printf("%d", titlePositionX);
-
     gotoxy(titlePositionX, 4); printf("%s", projetoName);
 
     for (int i = 0; i < 2; i++) {
@@ -24,20 +28,29 @@ void criarMenuPrincipal(int initX, int initY, int tamanho, char desc[][60], char
         printf("%s", desc[i]);
     }
 
-    int posicoes[2];
+    int initialOptionsY = 10;
+    int posicoes[qntd];
 
-    calcularTamanhoPosicao(posicoes, opcoes, tamanho, initX, 2);
+    int posicoesY[qntd];
+    int tamanhos[qntd];
 
-    int posicoesY[2] = {15, 19};
-    int tamanhos[2] = {strlen(opcoes[0]), strlen(opcoes[1])};
+    calcularTamanhoPosicao(posicoes, opcoes, tamanho, initX, qntd);
+
+    for (int j = 0; j < qntd; j++) {
+        posicoesY[qntd] = initialOptionsY+(2*j);
+        tamanhos[qntd] = strlen(opcoes[j]);
+    }
 
     int opcao = menu(opcoes, posicoes, posicoesY, tamanhos, 2, 0);
+
+    return opcao;
 }
 
-void calcularTamanhoPosicao(int posicoes[2], char strings[][20], int tamanhoBorda, int x, int qntd) {
-    for (int i = 0; i > qntd; i++) {
-        int stringSize = calcularTamanhoString(strings[i]);
+void calcularTamanhoPosicao(int posicoes[20], char strings[][20], int tamanhoBorda, int x, int qntd) {
+    for (int i = 0; i < qntd; i++) {
+        int stringSize = calcularTamanhoString(strings[i], tamanhoBorda, x);
 
+        posicoes[i] = stringSize;
     }
 }
 
