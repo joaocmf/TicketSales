@@ -1,5 +1,6 @@
 #include "interface.h"
 #include <windows.h>
+#include "vendedor.h"
 #include <conio.h>
 
 int getTecla(){

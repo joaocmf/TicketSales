@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1732882634 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\interface.c
+	"interface.h"
+	<windows.h>
+	"vendedor.h"
+	<conio.h>
+
+1732875902 c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\interface.h
+
+1732875902 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1732875902 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\cliente.c
+
+1732882863 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\vendedor.c
+	<stdio.h>
+	"interface.h"
+	"cliente.h"
+	"vendedor.h"
+
+1732875902 c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\cliente.h
+
+1732883573 c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\vendedor.h
+

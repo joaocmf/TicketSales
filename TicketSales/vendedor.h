@@ -10,5 +10,14 @@ struct ingresso{
 
 typedef struct ingresso Ingresso;
 
+int CriarMenu();
+int pesquisarIngresso(char nomeDoShow);
+void listarIngressos();
+Ingresso digitarIngresso();
+void TelaIngresso();
+void cadastrarIngreso();
+void InserirIngressos();
+void fecharArquivo();
+void abrirArquivo();
 
-#endif // VENDEDOR_H_INCLUDED
+#endif
