@@ -91,7 +91,7 @@ void listarIngressos() {
     Borda(4, 4, 60, 7, 1, 1);
     gotoxy(22, 5); printf("Lista de Ingressos");
     gotoxy(5, 6); printf("%-4s %-20s %7s %10s", "Show", "Descricao", "valor", "Data");
-    Selecao(Dados, j, 5, 8, 58, 3, Escolha);
+    Selecao(Dados, j, 5, 8, 58, 3, Escolha, BLUE);
 }
 
 int pesquisarIngresso(char nomeDoShow[100]) {

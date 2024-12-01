@@ -57,7 +57,7 @@ void Borda(int x, int y, int largura, int altura, int tipo, int sombra){    // E
     }
 }
 
-int menu(char opcoes[][20], int x[], int y[], int tam[], int qntd, int opcao) {
+int menu(char opcoes[][20], int x[], int y[], int tam[], int qntd, int opcao, int colors[2]) {
     int tecla;
 
     for (int i = 0; i < qntd; i++) {
@@ -67,12 +67,15 @@ int menu(char opcoes[][20], int x[], int y[], int tam[], int qntd, int opcao) {
     }
 
     do {
+        textBackground(colors[0]);
         Borda(x[opcao], y[opcao], tam[opcao], 2, 1, 0);
         gotoxy(x[opcao]+1, y[opcao]+1);
         printf("%s", opcoes[opcao]);
+        textBackground(colors[1]);
 
         tecla = getTecla();
 
+        if (tecla == TEC_ESC) opcao = qntd-1;
         if (tecla == TEC_ENTER) break;
 
         Borda(x[opcao], y[opcao], tam[opcao], 2, 0, 0);
@@ -89,14 +92,14 @@ int menu(char opcoes[][20], int x[], int y[], int tam[], int qntd, int opcao) {
     return opcao;
 }
 
-int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, int Escolha) {
+int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, int Escolha, int color) {
     int primeira = 0;
     int tecla;
 
     do {
         for (int i = primeira; i < Qte && i-primeira < Altura; i++) {
             gotoxy(x, y+i-primeira);
-            if (i == Escolha) textBackground(BLUE);
+            if (i == Escolha) textBackground(color);
             else textBackground(BLACK);
             printf("%*s", -Largura, Dados[i]);
         }

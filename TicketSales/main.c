@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "vendedor.h"
+#include "interface.h"
 #include "cliente.h"
 
 char projetoName[50] = "TicketSales";
@@ -19,8 +21,7 @@ int main() {
         switch(opcao) {
             case 0:
                 system("cls");
-
-                system("pause");
+                opcao = MenuCliente(opcao);
                 break;
             case 1:
                 system("cls");
@@ -30,7 +31,7 @@ int main() {
             case 2:
                 system("cls");
                 telaSaida(3, 2, 80);
-                printf("\n\n\n\n\n");
+                printf("\n\n\n\n");
                 break;
         }
     } while(opcao != 2);
@@ -62,7 +63,8 @@ int criarMenuPrincipal(int initX, int initY, int tamanho, char desc[][60], char 
         tamanhos[j] = strlen(opcoes[j]);
     }
 
-    int opcao = menu(opcoes, posicoes, posicoesY, tamanhos, qntd, 0);
+    int colors[2] = {BLACK, BLACK};
+    int opcao = menu(opcoes, posicoes, posicoesY, tamanhos, qntd, 0, colors);
 
     return opcao;
 }

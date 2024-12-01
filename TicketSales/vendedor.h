@@ -1,7 +1,7 @@
 #ifndef VENDEDOR_H_INCLUDED
 #define VENDEDOR_H_INCLUDED
 
-struct ingresso{
+struct ingresso {
     char show[100];
     char descricao[300];
     double valor;

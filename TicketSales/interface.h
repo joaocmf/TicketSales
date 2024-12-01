@@ -19,7 +19,7 @@ void gotoxy(int x, int y);
 void textColor(int icolor);
 void textBackground(int icolor);
 void Borda(int x, int y, int largura, int altura, int tipo, int sombra);
-int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, int Escolha);
+int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, int Escolha, int color);
 void tipocursor (int cursor);
 void textcoloreback (int letras, int fundo);
 int EntradaDados(int x, int y, int Tamanho, char Texto[]);
