@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1732882634 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\interface.c
+1733070635 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\interface.c
 	"interface.h"
 	<windows.h>
 	"vendedor.h"
@@ -7,13 +7,16 @@
 
 1732875902 c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\interface.h
 
-1732875902 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\main.c
+1733070947 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
+	"vendedor.h"
+	"cliente.h"
 
-1732875902 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\cliente.c
+1733070635 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\cliente.c
 
-1732882863 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\vendedor.c
+1733070635 source:c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\vendedor.c
 	<stdio.h>
 	"interface.h"
 	"cliente.h"
@@ -21,7 +24,7 @@
 
 1732875902 c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\cliente.h
 
-1732883573 c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\vendedor.h
+1733070635 c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\vendedor.h
 
 1733068174 source:c:\users\joao\documents\github\ticketsales\ticketsales\cliente.c
 

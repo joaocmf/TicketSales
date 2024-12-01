@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "vendedor.h"
+#include "cliente.h"
 
 int main() {
     char descricao[][60] = { "Seja bem vindo ao nosso sistema de compra de ingressos.", "Selecione uma opcao abaixo:"};
@@ -15,7 +17,7 @@ int main() {
         switch(opcao) {
             case 0:
                 system("cls");
-                printf("MENU DE CLIENTE AQUI\n\n");
+                CriarMenu();
                 system("pause");
                 break;
             case 1:
