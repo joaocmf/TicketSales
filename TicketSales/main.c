@@ -4,6 +4,8 @@
 #include "vendedor.h"
 #include "cliente.h"
 
+char projetoName[50] = "TicketSales";
+
 int main() {
     char descricao[][60] = { "Seja bem vindo ao nosso sistema de compra de ingressos.", "Selecione uma opcao abaixo:"};
     char opcoes[][20] = { "Cliente (Compra)", "Vendedor", "Sair" };
@@ -27,7 +29,8 @@ int main() {
                 break;
             case 2:
                 system("cls");
-                printf("FIM DO PROGRAMA\n\n");
+                telaSaida(3, 2, 80);
+                printf("\n\n\n\n\n");
                 break;
         }
     } while(opcao != 2);
@@ -35,7 +38,6 @@ int main() {
 
 int criarMenuPrincipal(int initX, int initY, int tamanho, char desc[][60], char opcoes[][20], int qntd) {
     Borda(initX, initY, tamanho, 25, 1, 0);
-    char projetoName[50] = "TicketSales";
 
     int titlePositionX = calcularTamanhoString(projetoName, tamanho, initX);
     gotoxy(titlePositionX, 4); printf("%s", projetoName);
@@ -77,4 +79,30 @@ int calcularTamanhoString(char string[], int tamanhoBorda, int x) {
     int tamanhoNome = strlen(string);
 
     return (tamanhoBorda/2)-2+x-(tamanhoNome/2);
+}
+
+void telaSaida(int initX, int initY, int tamanho) {
+    Borda(initX, initY, tamanho, 25, 1, 0);
+
+    char textosFinais[][50] = {
+        "Obrigado por utilizar nosso sistema.",
+        "Tenha um bom Natal e um Feliz Ano Novo.",
+        "Volte sempre!",
+    };
+
+    int quantidade = 3;
+
+    for (int i = 0; i < quantidade; i++) {
+        int sizeString = calcularTamanhoString(textosFinais[i], tamanho, initX);
+
+        gotoxy(sizeString, 6+i);
+        printf("%s", textosFinais[i]);
+    }
+
+    int sizeTitle = calcularTamanhoString(projetoName, tamanho, initX);
+    gotoxy(sizeTitle, 23);
+    printf("%s", projetoName);
+
+    gotoxy(calcularTamanhoString("2024", tamanho, initX), 24);
+    printf("%s", "2024");
 }

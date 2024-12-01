@@ -38,7 +38,7 @@
 
 1733065310 c:\users\joao\documents\github\ticketsales\ticketsales\vendedor.h
 
-1733065925 source:c:\users\joao\documents\github\ticketsales\ticketsales\vendedor.c
+1733075062 source:c:\users\joao\documents\github\ticketsales\ticketsales\vendedor.c
 	<stdio.h>
 	"interface.h"
 	"cliente.h"
@@ -46,10 +46,12 @@
 
 1732793240 c:\users\joao\documents\github\ticketsales\ticketsales\cliente.h
 
-1733068225 source:c:\users\joao\documents\github\ticketsales\ticketsales\main.c
+1733075153 source:c:\users\joao\documents\github\ticketsales\ticketsales\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	"vendedor.h"
+	"cliente.h"
 
 1733074288 source:c:\users\jao\desktop\ticketsales\ticketsales\cliente.c
 
