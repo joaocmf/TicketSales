@@ -23,3 +23,28 @@
 
 1732883573 c:\users\jao\desktop\projeto aeds\ticketsales\ticketsales\vendedor.h
 
+1733068174 source:c:\users\joao\documents\github\ticketsales\ticketsales\cliente.c
+
+1733065378 source:c:\users\joao\documents\github\ticketsales\ticketsales\interface.c
+	"interface.h"
+	<windows.h>
+	"vendedor.h"
+	<conio.h>
+
+1732793240 c:\users\joao\documents\github\ticketsales\ticketsales\interface.h
+
+1733065310 c:\users\joao\documents\github\ticketsales\ticketsales\vendedor.h
+
+1733065925 source:c:\users\joao\documents\github\ticketsales\ticketsales\vendedor.c
+	<stdio.h>
+	"interface.h"
+	"cliente.h"
+	"vendedor.h"
+
+1732793240 c:\users\joao\documents\github\ticketsales\ticketsales\cliente.h
+
+1733068225 source:c:\users\joao\documents\github\ticketsales\ticketsales\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

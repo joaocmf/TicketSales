@@ -16,8 +16,7 @@ void fecharArquivo(){
     fclose(fpIngresso);
 }
 
-void InserirIngressos(){
-    Ingresso i;
+void InserirIngressos(Ingresso i) {
     abrirArquivo();
     fwrite(&i, sizeof(Ingresso), 1, fpIngresso);
     fecharArquivo();
@@ -48,39 +47,33 @@ void TelaIngresso(){
 }
 
 
-Ingresso digitarIngresso(){
+Ingresso digitarIngresso() {
     Ingresso i;
-    char entrada[1000];
-    i.show[200];
-    i.descricao[200];
-    i.valor = 0;
-    i.data[11];
-
+    char entrada[1000] = {0};
     int tecla, atual = 0;
 
-    do{
-        if(atual = 0){
-            sprintf(entrada, " %[^\n]", i.show);
-            tecla = EntradaDados(19,6,5,entrada);
+    do {
+        if (atual == 0) {
+            gotoxy(19, 6); printf("Show: ");
+            scanf(" %[^\n]", i.show);
+        } else if (atual == 1) {
+            gotoxy(19, 9); printf("Descrição: ");
+            scanf(" %[^\n]", i.descricao);
+        } else if (atual == 2) {
+            gotoxy(19, 12); printf("Valor: ");
+            scanf("%lf", &i.valor);
+        } else if (atual == 3) {
+            gotoxy(19, 15); printf("Data: ");
+            scanf(" %[^\n]", i.data);
         }
-        if(atual == 1){
-            sprintf(entrada, " %[^\n]", i.descricao);
-            tecla = EntradaDados(19,6,5,entrada);
 
-        }
-        if(atual == 2){
-            sprintf(entrada, "%lf", i.valor);
-            tecla = EntradaDados(19,6,5,entrada);
-        }
-        if(atual == 3){
-            sprintf(entrada, " %[^\n]", i.data);
-            tecla = EntradaDados(19,6,5,entrada);
-        }
-        if(tecla == TEC_ENTER || tecla == TEC_BAIXO)atual++;
-        if(tecla == TEC_CIMA) atual--;
-        if(atual < 0) atual = 0;
-        if(atual > 3) atual = 3;
-    }while(tecla != TEC_ESC);
+        tecla = EntradaDados(19, 6, 5, entrada); // Se existir a função
+        if (tecla == TEC_ENTER || tecla == TEC_BAIXO) atual++;
+        if (tecla == TEC_CIMA) atual--;
+        if (atual < 0) atual = 0;
+        if (atual > 3) atual = 3;
+    } while (tecla != TEC_ESC);
+
     return i;
 }
 
@@ -94,7 +87,7 @@ void listarIngressos() {
 
     while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
         sprintf(
-                Dados[j], "%04s %-20s %7lf %10s",
+                Dados[j], "%4s %-20s %7lf %10s",
                 i.show, i.descricao, i.valor, i.data
         );
         j++;
@@ -106,16 +99,18 @@ void listarIngressos() {
     Selecao(Dados, j, 5, 8, 58, 3, Escolha);
 }
 
-int pesquisarIngresso(char nomeDoShow){
+int pesquisarIngresso(char nomeDoShow[100]) {
     Ingresso i;
-    fseek(fpIngresso,0,SEEK_SET);
-    while(fread(&i,sizeof(Ingresso),1,fpIngresso)){
-        if(strcmp(nomeDoShow, i.show) == 0){
-
-        }
+    fseek(fpIngresso, 0, SEEK_SET);
+    while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
+        if (strcmp(nomeDoShow, i.show) == 0) {
+            printf("Show encontrado: %s, Descrição: %s, Valor: %.2lf, Data: %s\n",
+                   i.show, i.descricao, i.valor, i.data);
             return 1;
+        }
     }
-return 0;
+    printf("Show não encontrado.\n");
+    return 0;
 }
 
 

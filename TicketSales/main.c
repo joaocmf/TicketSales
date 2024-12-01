@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main() {
     char descricao[][60] = { "Seja bem vindo ao nosso sistema de compra de ingressos.", "Selecione uma opcao abaixo:"};
@@ -8,9 +9,25 @@ int main() {
     int opcao;
 
     do {
+        system("cls");
         opcao = criarMenuPrincipal(3, 2, 80, descricao, opcoes, 3);
 
-        printf("%d", opcao);
+        switch(opcao) {
+            case 0:
+                system("cls");
+                printf("MENU DE CLIENTE AQUI\n\n");
+                system("pause");
+                break;
+            case 1:
+                system("cls");
+                printf("MENU DE VENDEDOR AQUI\n\n");
+                system("pause");
+                break;
+            case 2:
+                system("cls");
+                printf("FIM DO PROGRAMA\n\n");
+                break;
+        }
     } while(opcao != 2);
 }
 
@@ -37,11 +54,11 @@ int criarMenuPrincipal(int initX, int initY, int tamanho, char desc[][60], char 
     calcularTamanhoPosicao(posicoes, opcoes, tamanho, initX, qntd);
 
     for (int j = 0; j < qntd; j++) {
-        posicoesY[qntd] = initialOptionsY+(2*j);
-        tamanhos[qntd] = strlen(opcoes[j]);
+        posicoesY[j] = initialOptionsY+(3*j);
+        tamanhos[j] = strlen(opcoes[j]);
     }
 
-    int opcao = menu(opcoes, posicoes, posicoesY, tamanhos, 2, 0);
+    int opcao = menu(opcoes, posicoes, posicoesY, tamanhos, qntd, 0);
 
     return opcao;
 }

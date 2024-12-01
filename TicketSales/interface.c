@@ -114,6 +114,7 @@ int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, i
         if (primeira < 0) primeira=0;
     } while(tecla != TEC_ESC);
     textBackground(BLACK);
+    return 0;
 }
 
 int EntradaInserindo = 1;
@@ -142,7 +143,7 @@ int EntradaDados(int x, int y, int Tamanho, char Texto[]) {
     gotoxy(x, y);
     textcoloreback(BLUE, YELLOW);
 
-    printf("%*s", Tamanho, " ");
+    printf("%d", Tamanho);
     gotoxy(x, y);
 
     printf("%s", Texto);
