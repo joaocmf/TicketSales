@@ -17,12 +17,12 @@ int main() {
         switch(opcao) {
             case 0:
                 system("cls");
-                CriarMenu();
+
                 system("pause");
                 break;
             case 1:
                 system("cls");
-                printf("MENU DE VENDEDOR AQUI\n\n");
+                CriarMenu();
                 system("pause");
                 break;
             case 2:

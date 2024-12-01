@@ -51,3 +51,30 @@
 	<stdlib.h>
 	<string.h>
 
+1733074288 source:c:\users\jao\desktop\ticketsales\ticketsales\cliente.c
+
+1733074288 source:c:\users\jao\desktop\ticketsales\ticketsales\interface.c
+	"interface.h"
+	<windows.h>
+	"vendedor.h"
+	<conio.h>
+
+1733074288 c:\users\jao\desktop\ticketsales\ticketsales\interface.h
+
+1733074288 c:\users\jao\desktop\ticketsales\ticketsales\vendedor.h
+
+1733074288 source:c:\users\jao\desktop\ticketsales\ticketsales\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"vendedor.h"
+	"cliente.h"
+
+1733074288 c:\users\jao\desktop\ticketsales\ticketsales\cliente.h
+
+1733074288 source:c:\users\jao\desktop\ticketsales\ticketsales\vendedor.c
+	<stdio.h>
+	"interface.h"
+	"cliente.h"
+	"vendedor.h"
+

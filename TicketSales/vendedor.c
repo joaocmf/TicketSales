@@ -22,11 +22,6 @@ void InserirIngressos(Ingresso i) {
     fecharArquivo();
 }
 
-void cadastrarIngreso(){
-
-}
-
-
 void TelaIngresso(){
     textColor(YELLOW);
     textBackground(BLUE);
