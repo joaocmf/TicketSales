@@ -26,7 +26,6 @@ int main() {
             case 1:
                 system("cls");
                 CriarMenu();
-                system("pause");
                 break;
             case 2:
                 system("cls");

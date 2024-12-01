@@ -11,7 +11,7 @@ struct ingresso {
 typedef struct ingresso Ingresso;
 
 int CriarMenu();
-int pesquisarIngresso(char nomeDoShow[100]);
+void pesquisarIngresso();
 void listarIngressos();
 Ingresso digitarIngresso();
 void TelaIngresso();

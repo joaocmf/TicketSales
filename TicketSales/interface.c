@@ -82,8 +82,8 @@ int menu(char opcoes[][20], int x[], int y[], int tam[], int qntd, int opcao, in
         gotoxy(x[opcao]+1, y[opcao]+1);
         printf("%s", opcoes[opcao]);
 
-        if (tecla == TEC_DIR) opcao++;
-        if (tecla == TEC_ESQ) opcao--;
+        if (tecla == TEC_DIR || tecla == TEC_BAIXO) opcao++;
+        if (tecla == TEC_ESQ || tecla == TEC_CIMA) opcao--;
         if (opcao < 0) opcao = qntd-1;
         if (opcao >= qntd) opcao = 0;
 

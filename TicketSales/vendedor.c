@@ -23,10 +23,11 @@ void InserirIngressos(Ingresso i) {
 }
 
 void TelaIngresso(){
-    textColor(YELLOW);
-    textBackground(BLUE);
+    textColor(WHITE);
     Borda(4,2,60,20,0,1);
+    textBackground(GREEN);
     gotoxy(20,3); printf("CADASTRO DE INGRESSOS");
+    textBackground(BLACK);
     gotoxy(7,6); printf("SHOW:");
     Borda(18,5,40,2,0,0);
     gotoxy(7,9); printf("DESCRICAO:");
@@ -46,33 +47,37 @@ Ingresso digitarIngresso() {
     Ingresso i;
     char entrada[1000] = {0};
     int tecla, atual = 0;
+    int y = 0;
 
     do {
-        if (atual == 0) {
-            gotoxy(19, 6); printf("Show: ");
+            y = 6;
+            gotoxy(19, y);
             scanf(" %[^\n]", i.show);
-        } else if (atual == 1) {
-            gotoxy(19, 9); printf("Descrição: ");
-            scanf(" %[^\n]", i.descricao);
-        } else if (atual == 2) {
-            gotoxy(19, 12); printf("Valor: ");
-            scanf("%lf", &i.valor);
-        } else if (atual == 3) {
-            gotoxy(19, 15); printf("Data: ");
-            scanf(" %[^\n]", i.data);
-        }
 
-        tecla = EntradaDados(19, 6, 5, entrada); // Se existir a função
-        if (tecla == TEC_ENTER || tecla == TEC_BAIXO) atual++;
-        if (tecla == TEC_CIMA) atual--;
-        if (atual < 0) atual = 0;
-        if (atual > 3) atual = 3;
+            y = 9;
+            gotoxy(19, y);
+            scanf(" %[^\n]", i.descricao);
+
+            y = 12;
+            gotoxy(19, y);
+            scanf("%lf", &i.valor);
+
+            y = 15;
+            gotoxy(19, y);
+            scanf(" %[^\n]", i.data);
+
+     system("cls");
+
+     return i;
+
     } while (tecla != TEC_ESC);
+
 
     return i;
 }
 
 void listarIngressos() {
+    system("cls");
     char Dados[100][100];
     int Escolha = 0;
     int j = 0;
@@ -82,36 +87,67 @@ void listarIngressos() {
 
     while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
         sprintf(
-                Dados[j], "%4s %-20s %7lf %10s",
+                Dados[j], "%-20s %-25s %7.2lf %18s",
                 i.show, i.descricao, i.valor, i.data
         );
         j++;
     }
+    char titulo[20] = "LISTA DE INGRESSOS";
+    Borda(2, 4, 77, 18, 1, 0);
+    textBackground(GREEN);
+    gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
+    textBackground(BLACK);
 
-    Borda(4, 4, 60, 7, 1, 1);
-    gotoxy(22, 5); printf("Lista de Ingressos");
-    gotoxy(5, 6); printf("%-4s %-20s %7s %10s", "Show", "Descricao", "valor", "Data");
-    Selecao(Dados, j, 5, 8, 58, 3, Escolha, BLUE);
+    gotoxy(5, 8); printf("%-20s %-25s %7s %12s", "Show", "Descricao", "valor", "Data");
+    Selecao(Dados, j, 5, 10, 73, 15, Escolha, GREEN);
 }
 
-int pesquisarIngresso(char nomeDoShow[100]) {
+void pesquisarIngresso() {
+
+    int encontrado = 1;
+    system("cls");
+    char nomeShow[100];
+    char titulo[20] = "PESQUISAR INGRESSOS";
+    Borda(2, 4, 77, 18, 1, 0);
+    textBackground(GREEN);
+    gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
+    textBackground(BLACK);
+
+    gotoxy(5, 8); printf("Digite o nome do Show: ");
+    scanf(" %[^\n]", nomeShow);
+
+
+
     Ingresso i;
     fseek(fpIngresso, 0, SEEK_SET);
     while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
-        if (strcmp(nomeDoShow, i.show) == 0) {
-            printf("Show encontrado: %s, Descrição: %s, Valor: %.2lf, Data: %s\n",
+        if (strcmp(nomeShow, i.show) == 0) {
+            encontrado = 2;
+            printf("Show encontrado: %s, Descricao: %s, Valor: %.2lf, Data: %s\n",
                    i.show, i.descricao, i.valor, i.data);
-            return 1;
+                   break;
+
         }
+
     }
-    printf("Show não encontrado.\n");
-    return 0;
+    if(encontrado == 1){
+            printf("Show nao encontrado.\n");
+
+        }
+
+    textColor(BLACK);
+    tipocursor(0);
+    system("pause");
+    tipocursor(1);
+    textColor(WHITE);
 }
 
 
 int CriarMenu()
 {
+
     TelaIngresso();
+
 
     Ingresso ingressos[100];
     int QtdeIngressos = 0;
@@ -121,39 +157,42 @@ int CriarMenu()
     int x[] = {7,14,25,35,45,54};
     int y[] = {18,18,18,18,18,18};
     int tam[] = {5,9,8,8,7,7};
+    int collors[2] = {GREEN, BLACK};
     Ingresso i;
 
+
     do{
+        system("cls");
         TelaIngresso();
-        opcao = menu(opcoes,x,y,tam,6,opcao);
+        opcao = menu(opcoes,x,y,tam,6,opcao, collors);
+
 
         if(opcao==0){
             i = digitarIngresso();
             InserirIngressos(i);
+            CriarMenu();
         }
 
         if(opcao == 1)
         {
-            TelaIngresso();
-            ingressos[QtdeIngressos] = digitarIngresso();
-            QtdeIngressos ++;
+            pesquisarIngresso();
         }
 
-        else if(opcao == 2)
+        if(opcao == 2)
         {
-            printf("Digite o o Show que procura: ");
-            char nomeShow[100];
-            scanf(" %[^\n]", nomeShow);
-            pesquisarIngresso(nomeShow);
+
         }
+
 
         if(opcao==4){
             listarIngressos();
         }
-
-
+        if(opcao == 5){
+            break;
+        }
     }
     while(opcao != 0);
+
     fecharArquivo();
 
     return opcao;
