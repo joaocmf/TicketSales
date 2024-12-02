@@ -127,3 +127,37 @@
 	"cliente.h"
 	"vendedor.h"
 
+1733176921 source:c:\users\ti\desktop\ticketsales\ticketsales\cliente.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"interface.h"
+	"cliente.h"
+	"vendedor.h"
+
+1733176921 c:\users\ti\desktop\ticketsales\ticketsales\interface.h
+
+1733176921 c:\users\ti\desktop\ticketsales\ticketsales\cliente.h
+
+1733176921 c:\users\ti\desktop\ticketsales\ticketsales\vendedor.h
+
+1733176921 source:c:\users\ti\desktop\ticketsales\ticketsales\interface.c
+	"interface.h"
+	<windows.h>
+	"vendedor.h"
+	<conio.h>
+
+1733176921 source:c:\users\ti\desktop\ticketsales\ticketsales\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"vendedor.h"
+	"interface.h"
+	"cliente.h"
+
+1733179869 source:c:\users\ti\desktop\ticketsales\ticketsales\vendedor.c
+	<stdio.h>
+	"interface.h"
+	"cliente.h"
+	"vendedor.h"
+

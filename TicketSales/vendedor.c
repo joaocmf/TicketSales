@@ -125,14 +125,15 @@ void quantidadeDeIngressos() {
 
 void pesquisarIngresso() {
 
+    char Dados[100][100];
     int compradores = 4000;
     Cliente c;
     int encontrado = 1;
     system("cls");
     char nomeShow[100];
     char titulo[20] = "PESQUISAR INGRESSOS";
-    Borda(2, 4, 80, 18, 1, 0);
-    textBackground(GREEN);
+    Borda(2, 4, 93, 18, 1, 0);
+
     gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
     textBackground(BLACK);
 
@@ -149,10 +150,11 @@ void pesquisarIngresso() {
             textBackground(GREEN);
             textColor(BLACK);
             AbrirCliente();
-            gotoxy(5, 10); printf("%-12s %-15s %-9s %-15s %-19s", "Show", "Descricao", "valor", "Data", "Compradores");
+
+            gotoxy(5, 11); printf("%-5s %-18s %-20s %-13s %-17s %-9s", "ID", "Show", "Descricao", "Valor", "Data", "Compradores");
             textBackground(BLACK);
             textColor(WHITE);
-            gotoxy(5, 12); printf("%-12s %-15s %-9.2lf %-15s %-19d", i.show, i.descricao, i.valor, i.data, c.shows);
+            gotoxy(5, 12); printf("%-5d %-18s %-20s %-13.2lf %-17s %-9d", i.id, i.show, i.descricao, i.valor, i.data, c.shows);
 
 
 
