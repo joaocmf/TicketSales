@@ -22,7 +22,7 @@ void Borda(int x, int y, int largura, int altura, int tipo, int sombra);
 int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, int Escolha, int color);
 void tipocursor (int cursor);
 void textcoloreback (int letras, int fundo);
-int EntradaDados(int x, int y, int Tamanho, char Texto[]);
+int EntradaDados(int x, int y, int Tamanho, char Texto[], int cor[2]);
 
 enum DOS_COLORS {
        BLACK, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN,

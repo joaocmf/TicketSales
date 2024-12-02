@@ -46,12 +46,13 @@ int MenuCliente(opcaoMain) {
 }
 
 void registrarCliente() {
+    char entrada[100];
+
+    int tecla;
+    int campo = 0;
+
     telaCadastro(4, 2, 70);
     Cliente c;
-
-    gotoxy(19, 6); scanf(" %[^\n]", c.nome);
-    gotoxy(19, 9); scanf("%d", &c.idade);
-    gotoxy(19, 12); scanf(" %[^\n]", &c.cpf);
 
     char sexos[][20] = { "Masculino", "Feminino" };
     int posicoesY[2] = {14, 14};
@@ -59,22 +60,56 @@ void registrarCliente() {
     int posicoes[2] = { 18, 18+strlen(sexos[0])+27 };
     int tamanhos[2] = { strlen(sexos[0]), strlen(sexos[1]) };
 
-    int colors[] = {BLACK, BLACK};
-    int sexo = menu(sexos, posicoes, posicoesY, tamanhos, 2, 0, colors);
+    int colors[] = {RED, RED};
+    int corEspaco[] = { WHITE, LIGHT_RED };
+    int sexo;
 
-    if (sexo == 0) strcpy(c.sexo, "Masculino");;
-    if (sexo == 1) strcpy(c.sexo, "Feminino");
+    c.nome[0] = 0;
+    c.idade = 0;
+    c.cpf[0] = 0;
 
-    textBackground(RED);
-    Borda(18, 14, 44, 2, 0, 0);
+    do {
+        switch(campo) {
+            case 0:
+                tecla = EntradaDados(19, 6, 44, c.nome, corEspaco);
+                break;
+            case 1:
+                sprintf(entrada, "%d", c.idade);
+                if (c.idade == 0) entrada[0] = 0;
 
-    textBackground(BLACK);
-    gotoxy(19, 15); printf("%s", c.sexo);
+                tecla = EntradaDados(19, 9, 3, entrada, corEspaco);
+                c.idade = atoi(entrada);
+                break;
+            case 2:
+                tecla = EntradaDados(19, 12, 14, c.cpf, corEspaco);
+                break;
+            case 3:
+                sexo = menu(sexos, posicoes, posicoesY, tamanhos, 2, 0, colors);
 
-    gotoxy(7, 18);
-    system("pause");
+                if (sexo == 0) strcpy(c.sexo, "Masculino");;
+                if (sexo == 1) strcpy(c.sexo, "Feminino");
 
-    InsirirCliente(c);
+                textBackground(RED);
+                Borda(18, 14, 44, 2, 0, 0);
+
+                textBackground(LIGHT_RED);
+                gotoxy(19, 15); printf("%s", c.sexo);
+
+                tecla = TEC_CIMA;
+                break;
+        }
+
+        if (tecla == TEC_BAIXO || tecla == TEC_ENTER) campo++;
+        if (tecla == TEC_CIMA) campo--;
+
+        if (campo < 0) campo = 0;
+        if (campo > 3) campo = 3;
+        } while(tecla != TEC_ESC);
+        gotoxy(7, 18);
+        system("pause");
+
+        InsirirCliente(c);
+        textBackground(BLACK);
 }
 
 void telaCadastro(int x, int y, int tamanho) {
@@ -164,7 +199,7 @@ void ListarClientes() {
     gotoxy(calcularTamanhoString(title, 73, 6), 5); printf(title);
 
     gotoxy(8, 7); printf("%-25s %5s %16s %12s %7s", "Nome", "Idade", "CPF", "Sexo", "Shows");
-    Selecao(Dados, i, 8, 8, 58, 10, Escolha, RED);
+    Lista(Dados, i, 8, 8, 58, 10, Escolha, RED);
     textBackground(BLACK);
 }
 

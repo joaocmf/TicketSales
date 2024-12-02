@@ -60,6 +60,7 @@ void Borda(int x, int y, int largura, int altura, int tipo, int sombra){    // E
 int menu(char opcoes[][20], int x[], int y[], int tam[], int qntd, int opcao, int colors[2]) {
     int tecla;
 
+    textBackground(colors[1]);
     for (int i = 0; i < qntd; i++) {
         Borda(x[i], y[i], tam[i], 2, 0, 0);
         gotoxy(x[i]+1, y[i]+1);
@@ -92,7 +93,8 @@ int menu(char opcoes[][20], int x[], int y[], int tam[], int qntd, int opcao, in
     return opcao;
 }
 
-int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, int Escolha, int color) {
+
+int Lista(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, int Escolha, int color) {
     int primeira = 0;
     int tecla;
 
@@ -113,11 +115,48 @@ int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, i
         if (Escolha < 0) Escolha=0;
         if (Escolha > Qte-1) Escolha=Qte-1;
 
+        if (Escolha > Altura-primeira-1) primeira++;
+        if (Escolha < primeira) primeira = Escolha;
+
         if (primeira > Qte-Altura) primeira = Qte-Altura;
         if (primeira < 0) primeira=0;
     } while(tecla != TEC_ESC);
     textBackground(BLACK);
-    return 0;
+    return -1;
+}
+
+
+int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, int Escolha, int color) {
+    int primeira = 0;
+    int tecla;
+
+    do {
+        for (int i = primeira; i < Qte && i-primeira < Altura; i++) {
+            gotoxy(x, y+i-primeira);
+            if (i == Escolha) textBackground(color);
+            else textBackground(BLACK);
+            printf("%*s", -Largura, Dados[i]);
+        }
+
+        tecla = getTecla();
+
+        if (tecla == TEC_BAIXO) Escolha++;
+        if (tecla == TEC_CIMA) Escolha--;
+
+        if (Escolha < 0) Escolha=0;
+        if (Escolha > Qte-1) Escolha=Qte-1;
+
+        if (Escolha > Altura-primeira-1) primeira++;
+        if (Escolha < primeira) primeira = Escolha;
+
+        if (primeira > Qte-Altura) primeira = Qte-Altura;
+        if (primeira < 0) primeira=0;
+
+        if (tecla == TEC_ENTER) break;
+        if (tecla == TEC_ESC) Escolha = -1;
+    } while(tecla != TEC_ESC);
+    textBackground(BLACK);
+    return Escolha;
 }
 
 int EntradaInserindo = 1;
@@ -139,14 +178,14 @@ void textcoloreback (int letras, int fundo){/*para mudar a cor de fundo mude o b
     letras + (fundo << 4));
 }
 
-int EntradaDados(int x, int y, int Tamanho, char Texto[]) {
+int EntradaDados(int x, int y, int Tamanho, char Texto[], int cor[2]) {
     int Tecla, Pos;
     char aux[10000];
 
     gotoxy(x, y);
-    textcoloreback(BLUE, YELLOW);
+    textcoloreback(cor[0], cor[1]);
 
-    printf("%d", Tamanho);
+    printf("%*s", Tamanho, " ");
     gotoxy(x, y);
 
     printf("%s", Texto);
@@ -207,7 +246,7 @@ int EntradaDados(int x, int y, int Tamanho, char Texto[]) {
         if(Pos > 0 && Texto[Pos-1] == 0) Pos--;
     } while(1);
 
-    textcoloreback(YELLOW, BLUE);
+    textcoloreback(WHITE, BLACK);
     gotoxy(67, 0);
 
     return Tecla;
