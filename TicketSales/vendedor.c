@@ -124,7 +124,7 @@ void quantidadeDeIngressos() {
 }
 
 void pesquisarIngresso() {
-
+    int v = 200; // simulando a quantidade de compras que vou pegar do cliente.c
     char Dados[100][100];
     int compradores = 4000;
     Cliente c;
@@ -132,7 +132,7 @@ void pesquisarIngresso() {
     system("cls");
     char nomeShow[100];
     char titulo[20] = "PESQUISAR INGRESSOS";
-    Borda(2, 4, 93, 18, 1, 0);
+    Borda(2, 4, 87, 18, 1, 0);
 
     gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
     textBackground(BLACK);
@@ -151,17 +151,18 @@ void pesquisarIngresso() {
             textColor(BLACK);
             AbrirCliente();
 
-            gotoxy(5, 11); printf("%-5s %-18s %-20s %-13s %-17s %-9s", "ID", "Show", "Descricao", "Valor", "Data", "Compradores");
+            gotoxy(5, 11); printf("%-5s %-18s %-20s %-9s %-14s %-9s", "ID", "Show", "Descricao", "Valor", "Data", "Compradores");
             textBackground(BLACK);
             textColor(WHITE);
-            gotoxy(5, 12); printf("%-5d %-18s %-20s %-13.2lf %-17s %-9d", i.id, i.show, i.descricao, i.valor, i.data, c.shows);
+            gotoxy(5, 12); printf("%-5d %-18s %-20s %-9.2lf %-14s %-9d", i.id, i.show, i.descricao, i.valor, i.data, v);
 
 
 
-            /*textBackground(GREEN);
-            gotoxy(57, 20); printf("Total de compradores: %d", compradores);
+            textBackground(GREEN);
+            gotoxy(57, 20); printf("Lucro Bruto: R$%.2lf", i.valor * v);
+            textBackground(BLACK);
 
-            */
+
             break;
 
         }
