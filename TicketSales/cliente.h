@@ -6,6 +6,7 @@ struct cliente {
     int idade;
     char cpf[16];
     char sexo[30];
+    int shows[100];
 };
 
 typedef struct cliente Cliente;

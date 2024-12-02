@@ -4,10 +4,12 @@
 #include "vendedor.h"
 
 FILE *fpIngresso;
+int quantidade = 0;
+
 void abrirArquivo(){
-    fpIngresso = fopen("Ingressos.txt", "ab+");
+    fpIngresso = fopen("ingressos.txt", "ab+");
     if(fpIngresso == NULL){
-        printf("Nao Abriu Ingressos.txt!\n");
+        printf("Nao Abriu ingressos.txt!\n");
         exit(1);
     }
 }
@@ -49,6 +51,8 @@ Ingresso digitarIngresso() {
     int tecla, atual = 0;
     int y = 0;
 
+    i.id = quantidade*100;
+
     do {
             y = 6;
             gotoxy(19, y);
@@ -87,8 +91,8 @@ void listarIngressos() {
 
     while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
         sprintf(
-                Dados[j], "%-20s %-25s %7.2lf %18s",
-                i.show, i.descricao, i.valor, i.data
+                Dados[j], "%-5d %-16.16s %-20.20s %7.2lf %18s",
+                i.id, i.show, i.descricao, i.valor, i.data
         );
         j++;
     }
@@ -98,8 +102,21 @@ void listarIngressos() {
     gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
     textBackground(BLACK);
 
-    gotoxy(5, 8); printf("%-20s %-25s %7s %12s", "Show", "Descricao", "valor", "Data");
+    gotoxy(5, 8); printf("%-5s %-16s %-20s %6s %13s", "ID", "Show", "Descricao", "Valor", "Data");
     Selecao(Dados, j, 5, 10, 73, 15, Escolha, GREEN);
+}
+
+void quantidadeDeIngressos() {
+    Ingresso i;
+    int j;
+
+    fseek(fpIngresso, 0, SEEK_SET);
+
+    while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
+        j++;
+    }
+
+    quantidade = j;
 }
 
 void pesquisarIngresso() {
@@ -173,7 +190,6 @@ int CriarMenu()
     int collors[2] = {GREEN, BLACK};
     Ingresso i;
 
-
     do{
         system("cls");
         TelaIngresso();
@@ -181,6 +197,7 @@ int CriarMenu()
 
 
         if(opcao==0){
+            quantidadeDeIngressos();
             i = digitarIngresso();
             InserirIngressos(i);
             CriarMenu();

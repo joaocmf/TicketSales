@@ -1,15 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "interface.h"
 #include "cliente.h"
+#include "vendedor.h"
 
 FILE *fpCliente;
+FILE *fpIngresso;
+
 Cliente clientes[100];
 
 int MenuCliente(opcaoMain) {
     char descricao[][60] = { "Seja bem vindo cliente ao nosso sistema.", "Selecione uma opcao abaixo:"};
-    char opcoes[][20] = { "Cadastrar", "Pesquisar Cliente", "Shows", "Voltar" };
+    char opcoes[][20] = { "Cadastrar", "Pesquisar Cliente", "Listar Shows", "Voltar" };
 
     int opcao;
 
@@ -28,8 +32,10 @@ int MenuCliente(opcaoMain) {
                 ListarClientes();
                 break;
             case 2:
-                system("cls");
-                system("pause");
+                AbrirIngresso();
+                ListarShows();
+                FecharIngresso();
+                //system("pause");
                 break;
         }
     } while(opcao != 3);
@@ -141,9 +147,15 @@ void ListarClientes() {
     fseek(fpCliente, 0, SEEK_SET);
 
     while (fread(&c, sizeof(Cliente), 1, fpCliente)) {
+        int quantidadeDeShows = 0;
+
+        for (int s = 0; c.shows[s] == 0; s++) {
+            quantidadeDeShows++;
+        }
+
         sprintf(
-                Dados[i], "%-20s %5d %16s %20s",
-                c.nome, c.idade, c.cpf, c.sexo
+                Dados[i], "%-25.25s %5d %16s %12s %7d",
+                c.nome, c.idade, c.cpf, c.sexo, quantidadeDeShows
         );
         i++;
     }
@@ -151,8 +163,36 @@ void ListarClientes() {
     Borda(6, 4, 73, 20, 1, 1);
     gotoxy(calcularTamanhoString(title, 73, 6), 5); printf(title);
 
-    gotoxy(8, 7); printf("%-20s %5s %16s %20s", "Nome", "Idade", "CPF", "Sexo");
+    gotoxy(8, 7); printf("%-25s %5s %16s %12s %7s", "Nome", "Idade", "CPF", "Sexo", "Shows");
     Selecao(Dados, i, 8, 8, 58, 10, Escolha, RED);
+    textBackground(BLACK);
+}
+
+void ListarShows() {
+    char Dados[100][100];
+    char title[30] = "Shows Disponíveis";
+
+    int Escolha = 0;
+    int j = 0;
+
+    Ingresso i;
+    Cliente c;
+
+    fseek(fpIngresso, 0, SEEK_SET);
+
+    while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
+        sprintf(
+                Dados[j], "%-5d %-16.16s %-20.20s %7.2lf %18s",
+                i.id, i.show, i.descricao, i.valor, i.data
+        );
+        j++;
+    }
+
+    Borda(6, 4, 73, 20, 1, 1);
+    gotoxy(calcularTamanhoString(title, 73, 6), 5); printf(title);
+
+    gotoxy(8, 7); printf("%-5s %-16s %-20s %6s %13s", "ID", "Show", "Descricao", "Valor", "Data");
+    Selecao(Dados, j, 8, 8, 58, 10, Escolha, RED);
     textBackground(BLACK);
 }
 
@@ -163,6 +203,18 @@ void AbrirCliente() {
         printf("Nao foi possivel abrir o arquivo cliente.txt\n");
         exit(1);
     }
+}
+
+void AbrirIngresso(){
+    fpIngresso = fopen("ingressos.txt", "rb+");
+    if (fpIngresso == NULL){
+        printf("Nao Abriu ingressos.txt!\n");
+        exit(1);
+    }
+}
+
+void FecharIngresso() {
+    fclose(fpIngresso);
 }
 
 void FecharCliente() {

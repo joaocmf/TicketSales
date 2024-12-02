@@ -2,6 +2,7 @@
 #define VENDEDOR_H_INCLUDED
 
 struct ingresso {
+    int id;
     char show[100];
     char descricao[300];
     double valor;
