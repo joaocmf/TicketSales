@@ -127,10 +127,10 @@ void pesquisarIngresso() {
             encontrado = 2;
             textBackground(GREEN);
             textColor(BLACK);
-            gotoxy(5, 10); printf("%-12s %-15s %-9s %-11s %19s", "Show", "Descricao", "valor", "Data", "Compradores");
+            gotoxy(5, 10); printf("%-12s %-15s %-9s %-15s %-19s", "Show", "Descricao", "valor", "Data", "Compradores");
             textBackground(BLACK);
             textColor(WHITE);
-            gotoxy(5, 12); printf("%-12s %-15s %-9.2lf %-11s %19d", i.show, i.descricao, i.valor, i.data, compradores);
+            gotoxy(5, 12); printf("%-12s %-15s %-9.2lf %-15s %-19d", i.show, i.descricao, i.valor, i.data, compradores);
 
 
 
