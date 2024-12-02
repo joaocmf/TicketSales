@@ -93,3 +93,37 @@
 	"cliente.h"
 	"vendedor.h"
 
+1733161359 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\cliente.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"interface.h"
+	"cliente.h"
+	"vendedor.h"
+
+1733161359 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\interface.h
+
+1733156233 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\cliente.h
+
+1733160464 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\vendedor.h
+
+1733161359 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\interface.c
+	"interface.h"
+	<windows.h>
+	"vendedor.h"
+	<conio.h>
+
+1733156233 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"vendedor.h"
+	"interface.h"
+	"cliente.h"
+
+1733161407 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\vendedor.c
+	<stdio.h>
+	"interface.h"
+	"cliente.h"
+	"vendedor.h"
+

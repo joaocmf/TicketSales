@@ -20,5 +20,7 @@ void cadastrarIngreso();
 void InserirIngressos();
 void fecharArquivo();
 void abrirArquivo();
+void alterarIngresso();
+void excluirIngresso();
 
 #endif
