@@ -62,7 +62,13 @@ void registrarCliente() {
 
     int colors[] = {RED, RED};
     int corEspaco[] = { WHITE, LIGHT_RED };
-    int sexo;
+
+    char questions[][20] = {"Nao", "Sim"};
+    int posQuestion[2] = {18, 26};
+
+    int posYQuestion[2] = {17, 17};
+    int tamanhosQuestion[2] = {strlen(questions[0]), strlen(questions[1])};
+    int sexo, continuar;
 
     c.nome[0] = 0;
     c.idade = 0;
@@ -95,7 +101,19 @@ void registrarCliente() {
                 textBackground(LIGHT_RED);
                 gotoxy(19, 15); printf("%s", c.sexo);
 
-                tecla = TEC_CIMA;
+                tecla = TEC_BAIXO;
+                break;
+            case 4:
+                gotoxy(7, 18); printf("Editar?");
+
+                continuar = menu(questions, posQuestion, posYQuestion, tamanhosQuestion, 2, 0, colors);
+
+                if (continuar == 0) {
+                    tecla = TEC_ESC;
+                } else if (continuar == 1) {
+                    tecla = TEC_CIMA;
+                    campo = 3;
+                }
                 break;
         }
 
@@ -103,12 +121,12 @@ void registrarCliente() {
         if (tecla == TEC_CIMA) campo--;
 
         if (campo < 0) campo = 0;
-        if (campo > 3) campo = 3;
+        if (campo > 4) campo = 4;
         } while(tecla != TEC_ESC);
-        gotoxy(7, 18);
-        system("pause");
+        //gotoxy(7, 18);
+        //system("pause");
 
-        InsirirCliente(c);
+        InserirCliente(c);
         textBackground(BLACK);
 }
 
@@ -205,7 +223,7 @@ void ListarClientes() {
 
 void ListarShows() {
     char Dados[100][100];
-    char title[30] = "Shows Disponíveis";
+    char title[30] = "Shows Disponiveis";
 
     int Escolha = 0;
     int j = 0;
@@ -256,7 +274,7 @@ void FecharCliente() {
     fclose(fpCliente);
 }
 
-void InsirirCliente(Cliente c) {
+void InserirCliente(Cliente c) {
     fseek(fpCliente, 0, SEEK_END);
     fwrite(&c, sizeof(Cliente), 1, fpCliente);
 }
