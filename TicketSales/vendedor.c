@@ -104,11 +104,13 @@ void listarIngressos() {
 
 void pesquisarIngresso() {
 
+    int compradores = 4000;
+    Cliente c;
     int encontrado = 1;
     system("cls");
     char nomeShow[100];
     char titulo[20] = "PESQUISAR INGRESSOS";
-    Borda(2, 4, 77, 18, 1, 0);
+    Borda(2, 4, 80, 18, 1, 0);
     textBackground(GREEN);
     gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
     textBackground(BLACK);
@@ -123,9 +125,20 @@ void pesquisarIngresso() {
     while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
         if (strcmp(nomeShow, i.show) == 0) {
             encontrado = 2;
-            printf("Show encontrado: %s, Descricao: %s, Valor: %.2lf, Data: %s\n",
-                   i.show, i.descricao, i.valor, i.data);
-                   break;
+            textBackground(GREEN);
+            textColor(BLACK);
+            gotoxy(5, 10); printf("%-12s %-15s %-9s %-11s %19s", "Show", "Descricao", "valor", "Data", "Compradores");
+            textBackground(BLACK);
+            textColor(WHITE);
+            gotoxy(5, 12); printf("%-12s %-15s %-9.2lf %-11s %19d", i.show, i.descricao, i.valor, i.data, compradores);
+
+
+
+            /*textBackground(GREEN);
+            gotoxy(57, 20); printf("Total de compradores: %d", compradores);
+
+            */
+            break;
 
         }
 
