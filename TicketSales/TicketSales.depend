@@ -96,7 +96,7 @@
 	"cliente.h"
 	"vendedor.h"
 
-1733161359 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\cliente.c
+1733247169 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -104,19 +104,19 @@
 	"cliente.h"
 	"vendedor.h"
 
-1733161359 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\interface.h
+1733243673 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\interface.h
 
-1733156233 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\cliente.h
+1733243673 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\cliente.h
 
-1733160464 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\vendedor.h
+1733247169 c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\vendedor.h
 
-1733161359 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\interface.c
+1733243673 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\interface.c
 	"interface.h"
 	<windows.h>
 	"vendedor.h"
 	<conio.h>
 
-1733156233 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\main.c
+1733243673 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -124,8 +124,9 @@
 	"interface.h"
 	"cliente.h"
 
-1733161407 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\vendedor.c
+1733248464 source:c:\users\lab2.ccet\documents\github\ticketsales\ticketsales\vendedor.c
 	<stdio.h>
+	<conio.h>
 	"interface.h"
 	"cliente.h"
 	"vendedor.h"

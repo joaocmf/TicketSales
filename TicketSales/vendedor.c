@@ -281,7 +281,7 @@ void excluirIngresso() {
             gotoxy(5, 15); printf("Deseja excluir este ingresso?");
             char opcoes[][20] = {"SIM", "NAO"};
             int x[] = {7, 14};
-            int y[] = {18, 18};
+            int y[] = {17, 17};
             int tam[] = {3, 3};
             int colors[2] = {GREEN, BLACK};
 
@@ -296,25 +296,26 @@ void excluirIngresso() {
                 FILE *tempFile = fopen("ingressos.txt", "wb");
                 if (tempFile == NULL) {
                     gotoxy(5, 17); printf("Erro ao abrir o arquivo para escrita.\n");
-                    system("pause");
                     return;
                 }
 
                 fwrite(ingressos, sizeof(Ingresso), numIngressos, tempFile);
                 fclose(tempFile);
 
-                gotoxy(5, 22); printf("Ingresso excluido com sucesso!\n");
-                textColor(BLACK);
-                system("pause");
+                textColor(WHITE);
+                gotoxy(5, 21); printf("Ingresso excluido com sucesso!");
 
 
 
+                int colors[2] = {WHITE, BLACK};
+                PausarInvisivel(5, 26, colors);
 
                 return;
             } else if (opcao == 1) {
                 gotoxy(5, 22); printf("Operacao cancelada!\n");
                 textColor(BLACK);
-                system("pause");
+                int colors[2] = {WHITE, BLACK};
+                PausarInvisivel(5, 21, colors);
             }
         }
     }

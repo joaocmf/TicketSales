@@ -2,39 +2,39 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="cliente.c" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="cliente.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6516" topLine="228" />
+			<Cursor1 position="19874" topLine="712" />
 		</Cursor>
 	</File>
-	<File name="interface.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4839" topLine="147" />
-		</Cursor>
-	</File>
-	<File name="cliente.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="190" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="vendedor.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="vendedor.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="269" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="interface.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="cliente.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="550" topLine="7" />
+			<Cursor1 position="190" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="vendedor.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="interface.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2873" topLine="130" />
+			<Cursor1 position="4839" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="544" topLine="26" />
+		</Cursor>
+	</File>
+	<File name="vendedor.c" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3172" topLine="225" />
+		</Cursor>
+	</File>
+	<File name="interface.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="550" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
