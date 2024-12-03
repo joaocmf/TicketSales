@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <conio.h>
 #include "interface.h"
 #include "cliente.h"
 #include "vendedor.h"
@@ -54,9 +55,10 @@ Ingresso digitarIngresso() {
     int tecla, atual = 0;
     int y = 0;
 
-    i.id = quantidade*100;
+    i.id = quantidade*10;
 
     do {
+
             y = 6;
             gotoxy(19, y);
             scanf(" %[^\n]", i.show);
@@ -125,6 +127,7 @@ void quantidadeDeIngressos() {
 
 void pesquisarIngresso() {
     int v = 200; // simulando a quantidade de compras que vou pegar do cliente.c
+
     char Dados[100][100];
     int compradores = 4000;
     Cliente c;
@@ -134,18 +137,22 @@ void pesquisarIngresso() {
     char titulo[20] = "PESQUISAR INGRESSOS";
     Borda(2, 4, 87, 18, 1, 0);
 
+    textBackground(GREEN);
     gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
     textBackground(BLACK);
 
-    gotoxy(5, 8); printf("Digite o nome do Show: ");
-    scanf(" %[^\n]", nomeShow);
 
+    gotoxy(5, 7); printf("Digite o nome do Show: ");
+
+    Borda(27, 6, 19, 2, 0, 0);
+    gotoxy(28, 7);
+    scanf(" %[^\n]", nomeShow);
 
 
     Ingresso i;
     fseek(fpIngresso, 0, SEEK_SET);
     while (fread(&i, sizeof(Ingresso), 1, fpIngresso)) {
-        if (strcmp(nomeShow, i.show) == 0) {
+        if (strstr(i.show, nomeShow) != NULL) {
             encontrado = 2;
             textBackground(GREEN);
             textColor(BLACK);
@@ -154,7 +161,7 @@ void pesquisarIngresso() {
             gotoxy(5, 11); printf("%-5s %-18s %-20s %-9s %-14s %-9s", "ID", "Show", "Descricao", "Valor", "Data", "Compradores");
             textBackground(BLACK);
             textColor(WHITE);
-            gotoxy(5, 12); printf("%-5d %-18s %-20s %-9.2lf %-14s %-9d", i.id, i.show, i.descricao, i.valor, i.data, v);
+            gotoxy(5, 12); printf("%-5d %-18s %-20s %-9.2lf %-14s %9d", i.id, i.show, i.descricao, i.valor, i.data, v);
 
 
 
@@ -245,66 +252,75 @@ void alterarIngresso() {
 }
 
 
-void excluirIngresso(){
+void excluirIngresso() {
     system("cls");
-    int idIngresso, encontrado = 0;
+    int idIngresso, encontrado = 0, opcao = 0;
     Ingresso ingressos[100];
     int numIngressos = 0;
     char titulo[20] = "EXCLUIR INGRESSO";
 
     Borda(2, 4, 80, 18, 1, 0);
     textBackground(GREEN);
-    gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
+    gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf("%s", titulo);
     textBackground(BLACK);
 
-
     gotoxy(5, 8); printf("Digite o ID do ingresso: ");
+    Borda(30, 7, 5, 2, 0, 0);
+    gotoxy(31, 8);
     scanf("%d", &idIngresso);
-
 
     fseek(fpIngresso, 0, SEEK_SET);
     while (fread(&ingressos[numIngressos], sizeof(Ingresso), 1, fpIngresso)) {
         numIngressos++;
     }
 
-
-    for (int i = 0; i < numIngressos; i++) {
-        if (ingressos[i].id == idIngresso) {
+    for (int z = 0; z < numIngressos; z++) {
+        if (ingressos[z].id == idIngresso) {
             encontrado = 1;
 
+            gotoxy(5, 10); printf("Show: %s", ingressos[z].show);
+            gotoxy(5, 11); printf("Descricao: %s", ingressos[z].descricao);
+            gotoxy(5, 12); printf("Valor: %.2lf", ingressos[z].valor);
+            gotoxy(5, 13); printf("Data: %s", ingressos[z].data);
 
-            gotoxy(5, 10); printf("Show: %s", ingressos[i].show);
-            gotoxy(5, 11); printf("Descricao: %s", ingressos[i].descricao);
-            gotoxy(5, 12); printf("Valor: %.2lf", ingressos[i].valor);
-            gotoxy(5, 13); printf("Data: %s", ingressos[i].data);
+            gotoxy(5, 15); printf("Deseja excluir este ingresso?");
+            char opcoes[][20] = {"SIM", "NAO"};
+            int x[] = {7, 14};
+            int y[] = {18, 18};
+            int tam[] = {3, 3};
+            int colors[2] = {GREEN, BLACK};
 
+            opcao = menu(opcoes, x, y, tam, 2, opcao, colors);
 
-            gotoxy(5, 15); printf("Deseja Excluir esse ingresso? (1 - Sim / 0 - Nao): ");
-            int opcao;
-            scanf("%d", &opcao);
-
-            if (opcao == 1) {
-                // Deslocar todos os ingressos após o excluído para preencher o espaço
-                for (int j = i; j < numIngressos - 1; j++) {
-                    ingressos[j] = ingressos[j + 1];  // Copiar os ingressos para "remover" o escolhido
+            if (opcao == 0) {
+                for (int j = z; j < numIngressos - 1; j++) {
+                    ingressos[j] = ingressos[j + 1];
                 }
-
                 numIngressos--;
 
-
-                abrirArquivo();
-                fseek(fpIngresso, 0, SEEK_SET);
-                for (int j = 0; j < numIngressos; j++) {
-                    fwrite(&ingressos[j], sizeof(Ingresso), 1, fpIngresso);  // Regravar todos os ingressos restantes
+                FILE *tempFile = fopen("ingressos.txt", "wb");
+                if (tempFile == NULL) {
+                    gotoxy(5, 17); printf("Erro ao abrir o arquivo para escrita.\n");
+                    system("pause");
+                    return;
                 }
-                fecharArquivo();  // Fechar o arquivo
 
-                gotoxy(5, 17); printf("Ingresso excluido com sucesso!\n");
-            } else {
-                gotoxy(5, 17); printf("Operacao cancelada.\n");
+                fwrite(ingressos, sizeof(Ingresso), numIngressos, tempFile);
+                fclose(tempFile);
+
+                gotoxy(5, 22); printf("Ingresso excluido com sucesso!\n");
+                textColor(BLACK);
+                system("pause");
+
+
+
+
+                return;
+            } else if (opcao == 1) {
+                gotoxy(5, 22); printf("Operacao cancelada!\n");
+                textColor(BLACK);
+                system("pause");
             }
-
-            break;
         }
     }
 
@@ -353,7 +369,6 @@ int CriarMenu()
         {
             pesquisarIngresso();
         }
-
         if(opcao == 2)
         {
             alterarIngresso();
@@ -361,9 +376,7 @@ int CriarMenu()
         if(opcao == 3){
             excluirIngresso();
         }
-
-
-        if(opcao==4){
+        if(opcao == 4){
             listarIngressos();
         }
         if(opcao == 5){

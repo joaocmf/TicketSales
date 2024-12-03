@@ -60,22 +60,23 @@
 	"interface.h"
 	"cliente.h"
 
-1733085726 source:c:\users\jao\desktop\ticketsales\ticketsales\cliente.c
+1733224041 source:c:\users\jao\desktop\ticketsales\ticketsales\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"interface.h"
 	"cliente.h"
+	"vendedor.h"
 
-1733090226 source:c:\users\jao\desktop\ticketsales\ticketsales\interface.c
+1733220614 source:c:\users\jao\desktop\ticketsales\ticketsales\interface.c
 	"interface.h"
 	<windows.h>
 	"vendedor.h"
 	<conio.h>
 
-1733085726 c:\users\jao\desktop\ticketsales\ticketsales\interface.h
+1733220614 c:\users\jao\desktop\ticketsales\ticketsales\interface.h
 
-1733089525 c:\users\jao\desktop\ticketsales\ticketsales\vendedor.h
+1733220614 c:\users\jao\desktop\ticketsales\ticketsales\vendedor.h
 
 1733086431 source:c:\users\jao\desktop\ticketsales\ticketsales\main.c
 	<stdio.h>
@@ -85,10 +86,11 @@
 	"interface.h"
 	"cliente.h"
 
-1733085726 c:\users\jao\desktop\ticketsales\ticketsales\cliente.h
+1733220614 c:\users\jao\desktop\ticketsales\ticketsales\cliente.h
 
-1733106606 source:c:\users\jao\desktop\ticketsales\ticketsales\vendedor.c
+1733232954 source:c:\users\jao\desktop\ticketsales\ticketsales\vendedor.c
 	<stdio.h>
+	<conio.h>
 	"interface.h"
 	"cliente.h"
 	"vendedor.h"
