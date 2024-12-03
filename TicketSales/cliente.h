@@ -11,4 +11,18 @@ struct cliente {
 
 typedef struct cliente Cliente;
 
+void AbrirCliente();
+void FecharCliente();
+Cliente capturarDadosCliente();
+void registrarCliente();
+void editarCliente(int posicao);
+void ListarClientes(int escolha);
+void ExcluirCliente(int posicao);
+void InserirCliente(Cliente c);
+void telaCadastro(int x, int y, int tamanho);
+int criarMenuCliente(int initX, int initY, int tamanho, char desc[][60], char opcoes[][20], int qntd);
+void ListarShows();
+void FecharIngresso();
+void AbrirIngresso();
+
 #endif // CLIENTE_H_INCLUDED

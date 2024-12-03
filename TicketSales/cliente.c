@@ -29,13 +29,12 @@ int MenuCliente(opcaoMain) {
                 registrarCliente();
                 break;
             case 1:
-                ListarClientes();
+                ListarClientes(0);
                 break;
             case 2:
                 AbrirIngresso();
                 ListarShows();
                 FecharIngresso();
-                //system("pause");
                 break;
         }
     } while(opcao != 3);
@@ -109,6 +108,7 @@ void registrarCliente() {
                 continuar = menu(questions, posQuestion, posYQuestion, tamanhosQuestion, 2, 0, colors);
 
                 if (continuar == 0) {
+                    InserirCliente(c);
                     tecla = TEC_ESC;
                 } else if (continuar == 1) {
                     tecla = TEC_CIMA;
@@ -123,10 +123,7 @@ void registrarCliente() {
         if (campo < 0) campo = 0;
         if (campo > 4) campo = 4;
         } while(tecla != TEC_ESC);
-        //gotoxy(7, 18);
-        //system("pause");
 
-        InserirCliente(c);
         textBackground(BLACK);
 }
 
@@ -140,16 +137,16 @@ void telaCadastro(int x, int y, int tamanho) {
     gotoxy(calcularTamanhoString(titulo, tamanho, x), 3);
     printf(titulo);
 
-    gotoxy(7, 6); printf("Nome:");
-    Borda(18, 5, 44, 2, 0, 0);
+    gotoxy(x+3, y+4); printf("Nome:");
+    Borda(x+14, y+3, 44, 2, 0, 0);
 
-    gotoxy(7, 9); printf("Idade:");
-    Borda(18, 8, 44, 2, 0, 0);
+    gotoxy(x+3, y+7); printf("Idade:");
+    Borda(x+14, y+6, 44, 2, 0, 0);
 
-    gotoxy(7, 12); printf("CPF:");
-    Borda(18, 11, 44, 2, 0, 0);
+    gotoxy(x+3, y+10); printf("CPF:");
+    Borda(x+14, y+9, 44, 2, 0, 0);
 
-    gotoxy(7, 15); printf("Sexo:");
+    gotoxy(x+3, y+13); printf("Sexo:");
 
     textColor(WHITE);
     textBackground(BLACK);
@@ -189,11 +186,11 @@ int criarMenuCliente(int initX, int initY, int tamanho, char desc[][60], char op
     return opcao;
 }
 
-void ListarClientes() {
+void ListarClientes(int escolha) {
     char Dados[100][100];
     char title[30] = "Lista de Clientes";
 
-    int Escolha = 0;
+    int Escolha = escolha;
     int i = 0;
 
     Cliente c;
@@ -217,8 +214,170 @@ void ListarClientes() {
     gotoxy(calcularTamanhoString(title, 73, 6), 5); printf(title);
 
     gotoxy(8, 7); printf("%-25s %5s %16s %12s %7s", "Nome", "Idade", "CPF", "Sexo", "Shows");
-    Lista(Dados, i, 8, 8, 58, 10, Escolha, RED);
+
+    int selecionado = Selecao(Dados, i, 8, 8, 58, 10, Escolha, RED);
+
+    if (selecionado >= 0) {
+        int cores[] = { RED, BLACK };
+
+        char opcoes[][20] = { "Editar", "Apagar", "Voltar" };
+        int qtdOpcao = 3;
+
+        int posicaoX[qtdOpcao];
+        int posicaoY[qtdOpcao];
+
+        int tamanhos[qtdOpcao];
+        int initialY = 10;
+
+        for (int j = 0; j < qtdOpcao; j++) {
+            tamanhos[j] = strlen(opcoes[j]);
+            posicaoX[j] = initialY;
+            posicaoY[j] = 20;
+
+            initialY+= tamanhos[j]+5;
+        }
+
+        int opcao = menu(opcoes, posicaoX, posicaoY, tamanhos, qtdOpcao, 0, cores);
+
+        switch(opcao) {
+            case 0:
+                EditarCliente(selecionado);
+            break;
+            case 1:
+                ExcluirCliente(selecionado);
+            break;
+            case 2:
+                ListarClientes(selecionado);
+            break;
+        }
+    }
+
     textBackground(BLACK);
+}
+
+void EditarCliente(int posicao) {
+    Cliente clientes[100];
+
+    int numClientes = 0;
+    char entrada[100];
+
+    int tecla;
+    int campo = 0;
+
+    telaCadastro(6, 4, 73);
+    fseek(fpCliente, 0, SEEK_SET);
+
+    while (fread(&clientes[numClientes], sizeof(Cliente), 1, fpCliente)) {
+        numClientes++;
+    }
+
+    char sexos[][20] = { "Masculino", "Feminino" };
+    int posicoesY[2] = {16, 16};
+
+    int posicoes[2] = { 20, 20+strlen(sexos[0])+27 };
+    int tamanhos[2] = { strlen(sexos[0]), strlen(sexos[1]) };
+
+    int colors[] = {RED, RED};
+    int corEspaco[] = { WHITE, LIGHT_RED };
+
+    char questions[][20] = {"Nao", "Sim"};
+    int posQuestion[2] = {20, 28};
+
+    int posYQuestion[2] = {19, 19};
+    int tamanhosQuestion[2] = {strlen(questions[0]), strlen(questions[1])};
+
+    int sexo, continuar;
+
+    do {
+        switch(campo) {
+            case 0:
+                tecla = EntradaDados(21, 8, 44, clientes[posicao].nome, corEspaco);
+                break;
+            case 1:
+                sprintf(entrada, "%d", clientes[posicao].idade);
+                if (clientes[posicao].idade == 0) entrada[0] = 0;
+
+                tecla = EntradaDados(21, 11, 3, entrada, corEspaco);
+                clientes[posicao].idade = atoi(entrada);
+                break;
+            case 2:
+                tecla = EntradaDados(21, 14, 14, clientes[posicao].cpf, corEspaco);
+                break;
+            case 3:
+                sexo = menu(sexos, posicoes, posicoesY, tamanhos, 2, 0, colors);
+
+                if (sexo == 0) strcpy(clientes[posicao].sexo, "Masculino");;
+                if (sexo == 1) strcpy(clientes[posicao].sexo, "Feminino");
+
+                textBackground(RED);
+                Borda(20, 16, 44, 2, 0, 0);
+
+                textBackground(LIGHT_RED);
+                gotoxy(21, 17); printf("%s", clientes[posicao].sexo);
+
+                tecla = TEC_BAIXO;
+                break;
+            case 4:
+                gotoxy(9, 20); printf("Editar?");
+
+                continuar = menu(questions, posQuestion, posYQuestion, tamanhosQuestion, 2, 0, colors);
+
+                if (continuar == 0) {
+                    freopen("clientes.txt", "wb", fpCliente);
+
+                    for (int i = 0; i < numClientes; i++) {
+                        fwrite(&clientes[i], sizeof(Cliente), 1, fpCliente);
+                    }
+
+                    tecla = TEC_ESC;
+
+                    FecharCliente();
+                    AbrirCliente();
+
+                    textBackground(BLACK);
+                    //system("cls");
+                    ListarClientes(posicao);
+                } else if (continuar == 1) {
+                    tecla = TEC_CIMA;
+                    campo = 3;
+                }
+                break;
+        }
+
+        if (tecla == TEC_BAIXO || tecla == TEC_ENTER) campo++;
+        if (tecla == TEC_CIMA) campo--;
+
+        if (campo < 0) campo = 0;
+        if (campo > 4) campo = 4;
+    } while(tecla != TEC_ESC);
+
+    textBackground(BLACK);
+}
+
+void ExcluirCliente(int posicao) {
+    Cliente clientes[100];
+    int numClientes = 0;
+
+    fseek(fpCliente, 0, SEEK_SET);
+
+    while (fread(&clientes[numClientes], sizeof(Cliente), 1, fpCliente)) {
+        numClientes++;
+    }
+
+    for (int i = posicao; i < numClientes - 1; i++) {
+        clientes[i] = clientes[i + 1];
+    }
+
+    numClientes--;
+    freopen("clientes.txt", "wb", fpCliente);
+
+    for (int i = 0; i < numClientes; i++) {
+        fwrite(&clientes[i], sizeof(Cliente), 1, fpCliente);
+    }
+
+    FecharCliente();
+    AbrirCliente();
+    ListarClientes(0);
 }
 
 void ListarShows() {
@@ -278,5 +437,3 @@ void InserirCliente(Cliente c) {
     fseek(fpCliente, 0, SEEK_END);
     fwrite(&c, sizeof(Cliente), 1, fpCliente);
 }
-
-
