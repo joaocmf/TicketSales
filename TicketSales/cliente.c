@@ -33,7 +33,7 @@ int MenuCliente(opcaoMain) {
                 break;
             case 2:
                 AbrirIngresso();
-                ListarShows();
+                ListarShows(0);
                 FecharIngresso();
                 break;
         }
@@ -69,9 +69,7 @@ void registrarCliente() {
     int tamanhosQuestion[2] = {strlen(questions[0]), strlen(questions[1])};
     int sexo, continuar;
 
-    c.nome[0] = 0;
-    c.idade = 0;
-    c.cpf[0] = 0;
+    memset(&c, 0, sizeof(Cliente));
 
     do {
         switch(campo) {
@@ -89,6 +87,12 @@ void registrarCliente() {
                 tecla = EntradaDados(19, 12, 14, c.cpf, corEspaco);
                 break;
             case 3:
+                textBackground(RED);
+                textColor(RED);
+
+                Borda(18, 14, 44, 2, 0, 0);
+                textColor(WHITE);
+
                 sexo = menu(sexos, posicoes, posicoesY, tamanhos, 2, 0, colors);
 
                 if (sexo == 0) strcpy(c.sexo, "Masculino");;
@@ -198,8 +202,10 @@ void ListarClientes(int escolha) {
 
     while (fread(&c, sizeof(Cliente), 1, fpCliente)) {
         int quantidadeDeShows = 0;
-
-        for (int s = 0; c.shows[s] == 0; s++) {
+        for (int s = 0; s < 100; s++) {
+            if (c.shows[s] == 0) {
+                break;
+            }
             quantidadeDeShows++;
         }
 
@@ -304,6 +310,12 @@ void EditarCliente(int posicao) {
                 tecla = EntradaDados(21, 14, 14, clientes[posicao].cpf, corEspaco);
                 break;
             case 3:
+                textBackground(RED);
+                textColor(RED);
+
+                Borda(20, 16, 44, 2, 0, 0);
+                textColor(WHITE);
+
                 sexo = menu(sexos, posicoes, posicoesY, tamanhos, 2, 0, colors);
 
                 if (sexo == 0) strcpy(clientes[posicao].sexo, "Masculino");;
@@ -335,7 +347,6 @@ void EditarCliente(int posicao) {
                     AbrirCliente();
 
                     textBackground(BLACK);
-                    //system("cls");
                     ListarClientes(posicao);
                 } else if (continuar == 1) {
                     tecla = TEC_CIMA;
@@ -380,11 +391,11 @@ void ExcluirCliente(int posicao) {
     ListarClientes(0);
 }
 
-void ListarShows() {
+void ListarShows(int escolhido) {
     char Dados[100][100];
     char title[30] = "Shows Disponiveis";
 
-    int Escolha = 0;
+    int Escolha = escolhido;
     int j = 0;
 
     Ingresso i;
@@ -404,8 +415,234 @@ void ListarShows() {
     gotoxy(calcularTamanhoString(title, 73, 6), 5); printf(title);
 
     gotoxy(8, 7); printf("%-5s %-16s %-20s %6s %13s", "ID", "Show", "Descricao", "Valor", "Data");
-    Selecao(Dados, j, 8, 8, 58, 10, Escolha, RED);
+    int show = Selecao(Dados, j, 8, 8, 58, 10, Escolha, RED);
+
+    if (show >= 0) {
+        int cores[] = { RED, BLACK };
+
+        char opcoes[][20] = { "Comprar", "Voltar" };
+        int qtdOpcao = 2;
+
+        int posicaoX[qtdOpcao];
+        int posicaoY[qtdOpcao];
+
+        int tamanhos[qtdOpcao];
+        int initialY = 10;
+
+        for (int j = 0; j < qtdOpcao; j++) {
+            tamanhos[j] = strlen(opcoes[j]);
+            posicaoX[j] = initialY;
+            posicaoY[j] = 20;
+
+            initialY+= tamanhos[j]+5;
+        }
+
+        int opcao = menu(opcoes, posicaoX, posicaoY, tamanhos, qtdOpcao, 0, cores);
+
+        switch(opcao) {
+            case 0:
+                ComprarShow(show);
+                break;
+            case 1:
+                ListarShows(show);
+                break;
+        }
+    }
+
     textBackground(BLACK);
+}
+
+void ComprarShow(int showPosicao) {
+    Borda(6, 4, 73, 20, 0, 0);
+
+    char centerTexts[][40] = { "Comprar Ingresso", "Digite seu CPF por favor:", "Faca seu cadastro na tela anterior.", "Logado como:" };
+    char entrada[100] = {0};
+
+    int corEspaco[] = { WHITE, LIGHT_RED };
+    int tecla;
+
+    textBackground(RED);
+    textColor(WHITE);
+
+    gotoxy(calcularTamanhoString(centerTexts[0], 73, 10), 6);
+    printf("%s", centerTexts[0]);
+
+    gotoxy(calcularTamanhoString(centerTexts[1], 73, 10), 8);
+    printf("%s", centerTexts[1]);
+
+    do {
+        tecla = EntradaDados(calcularTamanhoString("XXX.XXX.XXX-XX", 73, 10), 9, 14, entrada, corEspaco);
+
+        Cliente c;
+
+        int pesquisa = PesquisarCliente(entrada, &c);
+
+        if (pesquisa == 1) {
+            textBackground(BLACK);
+            textColor(BLACK);
+
+            Borda(8, 8, 65, 5, 0, 0);
+
+            textColor(WHITE);
+            textBackground(RED);
+
+            gotoxy(calcularTamanhoString(centerTexts[3], 73, 10), 8);
+            printf("%s", centerTexts[3]);
+
+            gotoxy(calcularTamanhoString(c.nome, 73, 10), 9);
+            printf("%s", c.nome);
+
+            Ingresso ingresso;
+            int pesquisa = PesquisarShow(showPosicao, &ingresso);
+
+            gotoxy(9, 11);
+            printf("%10s", ingresso.data);
+
+            gotoxy(9+10+1, 11);
+            printf("%s", ingresso.show);
+
+            gotoxy(9, 13);
+            printf("Descricao: %s", ingresso.descricao);
+
+            int qtdOpcao = c.idade > 18 ? 2 : 3;
+            char opcoes[qtdOpcao][20];
+
+            sprintf(opcoes[0], "Inteira (%.2lf)", ingresso.valor);
+            strcpy(opcoes[qtdOpcao-1], "Voltar");
+
+            if (qtdOpcao == 3) {
+                sprintf(opcoes[1], "Meia (%.2lf)", ingresso.valor/2);
+            }
+
+            int cores[] = { RED, BLACK };
+
+            int posicaoX[qtdOpcao];
+            int posicaoY[qtdOpcao];
+
+            int tamanhos[qtdOpcao];
+            int initialX = 8;
+
+            for (int j = 0; j < qtdOpcao; j++) {
+                tamanhos[j] = strlen(opcoes[j]);
+                posicaoX[j] = initialX;
+                posicaoY[j] = 15;
+
+                initialX+= tamanhos[j]+5;
+            }
+
+            int escolha = menu(opcoes, posicaoX, posicaoY, tamanhos, qtdOpcao, 0, cores);
+
+            //Se a pessoa for pagar uma inteira
+            if (escolha == 0) {
+                RegistrarCompra(c, ingresso, ingresso.valor);
+            }
+
+            //Se a pessoa tiver permiss�o de meia e selecionar essa opcao
+            if (escolha == (qtdOpcao == 3 ? 1 : 5)) {
+                RegistrarCompra(c, ingresso, ingresso.valor/2);
+            }
+
+            //Se for igual a �ltima opcao dos bot�es ou seja "Voltar"
+            if (escolha == qtdOpcao-1) {
+                AbrirIngresso();
+                ListarShows(showPosicao);
+                FecharIngresso();
+            }
+            break;
+        } else {
+            gotoxy(calcularTamanhoString(centerTexts[2], 73, 10), 9);
+            printf("%s", centerTexts[2]);
+
+            textColor(BLACK);
+            textBackground(BLACK);
+
+            tipocursor(0);
+            tecla = TEC_ESC;
+
+            gotoxy(7, 10);
+            system("pause");
+
+            tipocursor(1);
+            textColor(WHITE);
+        }
+    } while(tecla != TEC_ESC);
+    //system("pause");
+}
+
+void RegistrarCompra(Cliente cliente, Ingresso ingresso, double valorPago) {
+    Cliente clientes[100];
+    int numClientes = 0;
+
+    fseek(fpCliente, 0, SEEK_SET);
+
+    while (fread(&clientes[numClientes], sizeof(Cliente), 1, fpCliente)) {
+        if (strcmp(clientes[numClientes].cpf, cliente.cpf) == 0) {
+            for (int i = 0; i < 100; i++) {
+                if (clientes[numClientes].shows[i] == 0) {
+                    clientes[numClientes].shows[i] = ingresso.id;
+                    break;
+                }
+            }
+        }
+        numClientes++;
+    }
+
+    freopen("clientes.txt", "wb", fpCliente);
+
+    for (int i = 0; i < numClientes; i++) {
+        fwrite(&clientes[i], sizeof(Cliente), 1, fpCliente);
+    }
+
+    int coresPadrao[2] = { WHITE, BLACK };
+    char strings[2][30];
+
+    strcpy(strings[0], "Compra registrada com sucesso");
+    sprintf(strings[1], "Valor pago: %.2lf", valorPago);
+
+    LimparArea(8, 14, 70, 5, coresPadrao);
+    textBackground(RED);
+
+    gotoxy(calcularTamanhoString(strings[0], 73, 10), 15);
+    printf(strings[0]);
+
+    gotoxy(calcularTamanhoString(strings[1], 73, 10), 16);
+    printf(strings[1]);
+
+    PausarInvisivel(9, 17, coresPadrao);
+    FecharCliente();
+    AbrirCliente();
+}
+
+int PesquisarShow(int posicao, Ingresso *I) {
+    int index = 0;
+
+    AbrirIngresso();
+    fseek(fpIngresso, 0, SEEK_SET);
+
+    while(fread(I, sizeof(Ingresso), 1, fpIngresso)) {
+        if (index == posicao) {
+            FecharIngresso();
+            return 1;
+        }
+
+        index++;
+    }
+
+    FecharIngresso();
+
+    return 0;
+}
+
+int PesquisarCliente(char CPF[16], Cliente *C) {
+    fseek(fpCliente, 0, SEEK_SET);
+
+    while(fread(C, sizeof(Cliente), 1, fpCliente)) {
+        if (strcmp(C->cpf, CPF) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 void AbrirCliente() {
@@ -436,4 +673,27 @@ void FecharCliente() {
 void InserirCliente(Cliente c) {
     fseek(fpCliente, 0, SEEK_END);
     fwrite(&c, sizeof(Cliente), 1, fpCliente);
+}
+
+void LimparArea(int x, int y, int largura, int tamanho, int colors[2]) {
+    textColor(BLACK);
+    textBackground(BLACK);
+
+    Borda(x, y, largura, tamanho, 0, 0);
+
+    textColor(colors[0]);
+    textBackground(colors[1]);
+}
+
+void PausarInvisivel(int x, int y, int colors[2]) {
+    textColor(BLACK);
+    textBackground(BLACK);
+    tipocursor(0);
+
+    gotoxy(x, y);
+    system("pause");
+
+    tipocursor(1);
+    textColor(colors[0]);
+    textBackground(colors[1]);
 }
