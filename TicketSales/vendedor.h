@@ -5,6 +5,7 @@ struct ingresso {
     int id;
     char show[100];
     char descricao[300];
+    double vendidos;
     double valor;
     char data[11];
 };

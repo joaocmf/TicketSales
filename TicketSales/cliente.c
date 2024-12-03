@@ -292,6 +292,10 @@ void EditarCliente(int posicao) {
     int posYQuestion[2] = {19, 19};
     int tamanhosQuestion[2] = {strlen(questions[0]), strlen(questions[1])};
 
+    textBackground(LIGHT_RED);
+    gotoxy(21, 11); printf("%-3d", clientes[posicao].idade);
+    gotoxy(21, 14); printf("%-14s", clientes[posicao].cpf);
+
     int sexo, continuar;
 
     do {
@@ -571,6 +575,7 @@ void ComprarShow(int showPosicao) {
 
 void RegistrarCompra(Cliente cliente, Ingresso ingresso, double valorPago) {
     Cliente clientes[100];
+
     int numClientes = 0;
 
     fseek(fpCliente, 0, SEEK_SET);
@@ -586,6 +591,8 @@ void RegistrarCompra(Cliente cliente, Ingresso ingresso, double valorPago) {
         }
         numClientes++;
     }
+
+    EditarVendidos(ingresso, valorPago);
 
     freopen("clientes.txt", "wb", fpCliente);
 
@@ -611,6 +618,50 @@ void RegistrarCompra(Cliente cliente, Ingresso ingresso, double valorPago) {
     PausarInvisivel(9, 17, coresPadrao);
     FecharCliente();
     AbrirCliente();
+}
+
+void EditarVendidos(Ingresso ingresso, double valorCompra) {
+    AbrirIngresso();
+
+    Ingresso ingressos[100];
+    int numIngressos = 0;
+
+    fseek(fpIngresso, 0, SEEK_SET);
+
+    while (fread(&ingressos[numIngressos], sizeof(Ingresso), 1, fpIngresso)) {
+        if (ingressos[numIngressos].id == ingresso.id) {
+            ingressos[numIngressos].vendidos += valorCompra;
+        }
+        numIngressos++;
+    }
+
+    freopen("ingressos.txt", "wb", fpIngresso);
+
+    for (int i = 0; i < numIngressos; i++) {
+        fwrite(&ingressos[i], sizeof(Ingresso), 1, fpIngresso);
+    }
+}
+
+int QuantidadeCompradores(int idDoShow) {
+    int quantidadeDeShows = 0;
+
+    AbrirCliente();
+    Cliente c;
+
+    fseek(fpCliente, 0, SEEK_SET);
+
+    while (fread(&c, sizeof(Cliente), 1, fpCliente)) {
+        for (int s = 0; s < 100; s++) {
+            if (c.shows[s] == idDoShow) quantidadeDeShows++;
+            if (c.shows[s] == 0) {
+                break;
+            }
+        }
+    }
+
+    FecharCliente();
+
+    return quantidadeDeShows;
 }
 
 int PesquisarShow(int posicao, Ingresso *I) {
