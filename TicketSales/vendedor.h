@@ -13,10 +13,10 @@ struct ingresso {
 typedef struct ingresso Ingresso;
 
 int CriarMenu();
-void pesquisarIngresso();
+void pequisarIngresso();
 void listarIngressos();
 Ingresso digitarIngresso();
-void TelaIngresso();
+void TelaIngresso(char titulo[]);
 void cadastrarIngreso();
 void InserirIngressos();
 void fecharArquivo();

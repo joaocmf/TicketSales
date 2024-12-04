@@ -25,11 +25,11 @@ void InserirIngressos(Ingresso i) {
     fecharArquivo();
 }
 
-void TelaIngresso(){
+void TelaIngresso(char titulo[]){
     textColor(WHITE);
     Borda(4,2,60,20,0,1);
     textBackground(GREEN);
-    gotoxy(20,3); printf("CADASTRO DE INGRESSOS");
+    gotoxy(20,3); printf(titulo);
     textBackground(BLACK);
     gotoxy(7,6); printf("SHOW:");
     Borda(18,5,40,2,0,0);
@@ -184,10 +184,21 @@ void pesquisarIngresso() {
 
 void alterarIngresso() {
     system("cls");
-    int idIngresso, encontrado = 0;
+    int i = 0;
+    int idIngresso = 0, encontrado = 0;
+    int tecla, campo = 0;
     Ingresso ingressos[100];
     int numIngressos = 0;
+    char entrada[100];
     char titulo[20] = "ALTERAR INGRESSO";
+    int cores[2] = {WHITE, BLACK};
+
+    char opcoes[][20] = {"SIM", "NAO"};
+    int opcao = 3;
+    int x[] = {7, 14};
+    int y[] = {17, 17};
+    int tam[] = {3, 3};
+    int colors[2] = {GREEN, BLACK};
 
     Borda(2, 4, 80, 18, 1, 0);
     textBackground(GREEN);
@@ -196,54 +207,110 @@ void alterarIngresso() {
 
 
     gotoxy(5, 8); printf("Digite o ID do ingresso: ");
-    scanf("%d", &idIngresso);
 
+    double valor = 0;
+    int finalizado = 0;
 
-    fseek(fpIngresso, 0, SEEK_SET);
-    while (fread(&ingressos[numIngressos], sizeof(Ingresso), 1, fpIngresso)) {
-        numIngressos++;
-    }
+    do{
+        if(campo == 0){
+            sprintf(entrada, "%d", idIngresso);
 
+            if(idIngresso == 0) entrada[0] = 0;
+            tecla = EntradaDados(30, 8, 3, entrada, cores);
+            idIngresso = atoi(entrada);
 
-    for (int i = 0; i < numIngressos; i++) {
-        if (ingressos[i].id == idIngresso) {
-            encontrado = 1;
-
-
-            gotoxy(5, 10); printf("Show: %s", ingressos[i].show);
-            gotoxy(5, 11); printf("Descricao: %s", ingressos[i].descricao);
-            gotoxy(5, 12); printf("Valor: %.2lf", ingressos[i].valor);
-            gotoxy(5, 13); printf("Data: %s", ingressos[i].data);
-
-
-            gotoxy(5, 15); printf("Digite o novo nome do show: ");
-            scanf(" %[^\n]", ingressos[i].show);
-            gotoxy(5, 16); printf("Digite a nova descricao: ");
-            scanf(" %[^\n]", ingressos[i].descricao);
-            gotoxy(5, 17); printf("Digite o novo valor: ");
-            scanf("%lf", &ingressos[i].valor);
-            gotoxy(5, 18); printf("Digite a nova data: ");
-            scanf(" %[^\n]", ingressos[i].data);
-
-            break;
+            if(tecla == TEC_ESC){
+                break;
+            }
         }
-    }
-
-    if (!encontrado) {
-        gotoxy(5, 20); printf("Ingresso com ID %d nao encontrado.\n", idIngresso);
-    } else {
 
 
-        fpIngresso = fopen("ingressos.txt", "wb");
-        fseek(fpIngresso, 0, SEEK_CUR);
-        for (int i = 0; i < numIngressos; i++) {
-            fwrite(&ingressos[i], sizeof(Ingresso), 1, fpIngresso);
+        if (idIngresso != 0) {
+            if (opcao == 3) {
+                fseek(fpIngresso, 0, SEEK_SET);
+
+                while (fread(&ingressos[numIngressos], sizeof(Ingresso), 1, fpIngresso)) {
+                    numIngressos++;
+                }
+
+                for (i = 0; i < numIngressos; i++) {
+                    if (ingressos[i].id == idIngresso) {
+                        encontrado = 1;
+                        break;
+                    }
+                }
+
+                if (!encontrado) {
+                    gotoxy(5, 20); printf("Ingresso com ID %d nao encontrado.\n", idIngresso);
+
+                    PausarInvisivel(5, 25, cores);
+                    break;
+                }
+
+                LimparArea(4, 19, 70, 2, cores);
+                gotoxy(5, 10); printf("Show: %s", ingressos[i].show);
+                gotoxy(5, 11); printf("Descricao: %s", ingressos[i].descricao);
+                gotoxy(5, 12); printf("Valor: %.2lf", ingressos[i].valor);
+                gotoxy(5, 13); printf("Data: %s", ingressos[i].data);
+                gotoxy(5, 15); printf("Deseja Editar este ingresso?");
+
+                opcao = 0;
+                opcao = menu(opcoes, x, y, tam, 2, opcao, colors);
+            }
+
+            valor = ingressos[i].valor;
+
+            if(opcao == 0){
+                if(campo == 1){
+                    system("cls");
+                    TelaIngresso("EDICAO DE INGRESSO");
+
+                    tecla = EntradaDados(19, 6, 40, ingressos[i].show, cores);
+                }
+
+                if(campo == 2){
+                    tecla = EntradaDados(19, 9, 40, ingressos[i].descricao, cores);
+                }
+
+                if (campo == 3) {
+                    gotoxy(19, 12); scanf("%lf", &ingressos[i].valor);
+                    tecla = TEC_ENTER;
+                }
+
+                if(campo == 4){
+                    tecla = EntradaDados(19, 15, 11, ingressos[i].data, cores);
+                    finalizado = 1;
+                }
+
+                if (finalizado == 1){
+                    fpIngresso = fopen("ingressos.txt", "wb");
+                    fseek(fpIngresso, 0, SEEK_CUR);
+                    for (int i = 0; i < numIngressos; i++) {
+                        fwrite(&ingressos[i], sizeof(Ingresso), 1, fpIngresso);
+                    }
+                    fecharArquivo();
+                    gotoxy(5, 20); printf("Ingresso editado com sucesso!\n");
+                    PausarInvisivel(5, 25, cores);
+                    break;
+                }
+            }
+
+            else if(opcao == 1){
+                gotoxy(5, 21); printf("Operacao cancelada!\n");
+                PausarInvisivel(5, 25, cores);
+                break;
+            }
+        } else break;
+
+        if (tecla == TEC_BAIXO || tecla == TEC_ENTER) campo++;
+        if (tecla == TEC_CIMA) campo--;
+        if(campo <= 0 && campo > 1) campo = 0;
+
+        if(opcao == 0){
+            if (campo < 1) campo = 1;
+            if (campo > 4) campo = 4;
         }
-        fecharArquivo();
-        gotoxy(5, 20); printf("Ingresso editado com sucesso!\n");
-    }
-
-
+    }while(tecla != TEC_ESC);
 }
 
 
@@ -334,7 +401,7 @@ void excluirIngresso() {
 int CriarMenu()
 {
 
-    TelaIngresso();
+    TelaIngresso("CADASTRO DE INGRESSOS");
 
 
     Ingresso ingressos[100];
@@ -350,7 +417,7 @@ int CriarMenu()
 
     do{
         system("cls");
-        TelaIngresso();
+        TelaIngresso("CADASTRO DE INGRESSOS");
         opcao = menu(opcoes,x,y,tam,6,opcao, collors);
 
 
