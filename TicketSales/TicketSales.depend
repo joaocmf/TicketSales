@@ -165,7 +165,7 @@
 	"cliente.h"
 	"vendedor.h"
 
-1733246034 source:c:\users\lab2.ccet\desktop\ticketsales\ticketsales\cliente.c
+1733331183 source:c:\users\lab2.ccet\desktop\ticketsales\ticketsales\cliente.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -177,7 +177,7 @@
 
 1733242767 c:\users\lab2.ccet\desktop\ticketsales\ticketsales\cliente.h
 
-1733244075 c:\users\lab2.ccet\desktop\ticketsales\ticketsales\vendedor.h
+1733330136 c:\users\lab2.ccet\desktop\ticketsales\ticketsales\vendedor.h
 
 1733242767 source:c:\users\lab2.ccet\desktop\ticketsales\ticketsales\interface.c
 	"interface.h"
@@ -193,7 +193,7 @@
 	"interface.h"
 	"cliente.h"
 
-1733246684 source:c:\users\lab2.ccet\desktop\ticketsales\ticketsales\vendedor.c
+1733332541 source:c:\users\lab2.ccet\desktop\ticketsales\ticketsales\vendedor.c
 	<stdio.h>
 	<conio.h>
 	"interface.h"

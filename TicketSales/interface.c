@@ -130,6 +130,8 @@ int Selecao(char Dados[][100], int Qte, int x, int y, int Largura, int Altura, i
     int primeira = 0;
     int tecla;
 
+    if (Escolha >= Altura) primeira = Escolha-Altura+1;
+
     do {
         for (int i = primeira; i < Qte && i-primeira < Altura; i++) {
             gotoxy(x, y+i-primeira);

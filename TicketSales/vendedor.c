@@ -113,7 +113,7 @@ void listarIngressos() {
 
 void quantidadeDeIngressos() {
     Ingresso i;
-    int j;
+    int j = 0;
 
     fseek(fpIngresso, 0, SEEK_SET);
 
@@ -140,9 +140,9 @@ void pesquisarIngresso() {
     textBackground(BLACK);
 
     gotoxy(5, 7); printf("Digite o nome do Show: ");
-    Borda(27, 6, 19, 2, 0, 0);
+    Borda(28, 6, 19, 2, 0, 0);
 
-    gotoxy(28, 7);
+    gotoxy(29, 7);
     scanf(" %[^\n]", nomeShow);
 
     Ingresso i;
@@ -162,21 +162,18 @@ void pesquisarIngresso() {
             textColor(WHITE);
             gotoxy(5, 12); printf("%-5d %-18s %-20s %-9.2lf %-14s %9d", i.id, i.show, i.descricao, i.valor, i.data, compradores);
 
-
-
             textBackground(GREEN);
             gotoxy(57, 20); printf("Lucro Bruto: R$%.2lf", i.vendidos);
             textBackground(BLACK);
-
 
             break;
         }
 
     }
-    if(encontrado == 1){
-            printf("Show nao encontrado.\n");
 
-        }
+    if(encontrado == 1){
+        printf("\n\n\tShow nao encontrado.\n");
+    }
 
     int colors[2] = {WHITE, BLACK};
     PausarInvisivel(5, 21, colors);
@@ -201,12 +198,13 @@ void alterarIngresso() {
     int colors[2] = {GREEN, BLACK};
 
     Borda(2, 4, 80, 18, 1, 0);
+
     textBackground(GREEN);
     gotoxy(calcularTamanhoString(titulo, 77, 2), 5); printf(titulo);
     textBackground(BLACK);
 
-
     gotoxy(5, 8); printf("Digite o ID do ingresso: ");
+    Borda(29, 7, 20, 2, 0, 0);
 
     double valor = 0;
     int finalizado = 0;

@@ -221,7 +221,7 @@ void ListarClientes(int escolha) {
 
     gotoxy(8, 7); printf("%-25s %5s %16s %12s %7s", "Nome", "Idade", "CPF", "Sexo", "Shows");
 
-    int selecionado = Selecao(Dados, i, 8, 8, 58, 10, Escolha, RED);
+    int selecionado = Selecao(Dados, i, 8, 8, 58, 5, Escolha, RED);
 
     if (selecionado >= 0) {
         int cores[] = { RED, BLACK };
